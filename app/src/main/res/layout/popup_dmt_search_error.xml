@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorPrimaryDark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile no is not exist in sender list."
+        android:textSize="@dimen/popup_content_text_size"
+        android:textColor="@color/colorBlack"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnDMTTryAgain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dmt_search_popup_cancel"
+            android:background="@drawable/square_round_corner_colordefault"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_content_text_small_size"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnDMTAddSender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dmt_search_popup_add_sender"
+            android:background="@drawable/square_round_corner_colorprimary"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_content_text_small_size"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"/>
+
+</LinearLayout>

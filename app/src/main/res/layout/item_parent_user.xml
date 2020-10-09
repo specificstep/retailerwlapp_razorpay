@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="6dp"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_Item_ParentUser_FirmName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Firm Name"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorBlack"/>
+
+            <TextView
+                android:id="@+id/txt_Item_ParentUser_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Name"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorBlack"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txt_Item_ParentUser_MobileNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:padding="3dp"
+                android:text="Mobile"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorBlack"/>
+
+                <ImageView
+                    android:id="@+id/imgParentUserCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_call"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorGreen"
+                    android:layout_weight="1.7"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_Item_ParentUser_UserType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:paddingBottom="3dp"
+                android:text="User type"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorBlack"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_Item_ParentUser_DownArrow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_down_arrow"
+            android:tint="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+</LinearLayout>

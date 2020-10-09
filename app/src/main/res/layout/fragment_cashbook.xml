@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/colorWhite"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_recycler_view_CashBook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lv_trans_search_CashBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarThumbVertical="@drawable/custom_scroll" />
+
+            <ImageView
+                android:id="@+id/imgNoDataCashbook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nodata_found"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCashbook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:tint="@color/colorWhite"
+        android:src="@drawable/ic_filter"
+        app:borderWidth="0dp" />
+
+</FrameLayout>

@@ -1,0 +1,205 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="specificstep.com.Fragments.DMTAddBenefitiaryFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edtDMTAddBenefitiaryFirstName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:hint="@string/dmt_add_sender_first_name" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edtDMTAddBenefitiaryLastName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:hint="@string/dmt_add_sender_last_name"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edtDMTAddBenefitiaryMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="10"
+                    android:hint="@string/dmt_add_sender_mobile"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edtDMTAddBenefitiaryAccountNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:hint="@string/dmt_add_benefitiary_account_no" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <AutoCompleteTextView
+                    android:id="@+id/edtDMTAddBenefitiaryBankName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:hint="@string/dmt_add_benefitiary_bank_name" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hintTextAppearance="@style/TextLabel">
+
+                <EditText
+                    android:id="@+id/edtDMTAddBenefitiaryIfscCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:hint="@string/dmt_add_benefitiary_ifsc_code" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/dmt_add_benefitiary_account_type"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/content_text_size" />
+
+                <Spinner
+                    android:id="@+id/spnDMTAddBenefitiaryAccType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_beneficiary_verify"
+                    android:textSize="@dimen/content_text_size"
+                    android:textColor="@color/colorBlack" />
+
+                <Switch
+                    android:id="@+id/swtAddBeneficiary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textOff="NO"
+                    android:layout_marginLeft="30dp"
+                    android:textOn="YES" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btnAddBenefitiaryCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_round_corner_colordefault"
+                    android:text="@string/dmt_add_sender_btn_cancel"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_content_text_small_size" />
+
+                <Button
+                    android:id="@+id/btnAddBenefitiarySubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_round_corner_colorprimary"
+                    android:text="@string/dmt_add_sender_btn_submit"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/btn_content_text_small_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:weightSum="2">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person1"
+            android:tint="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/txtDMTBenefitiaryFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/content_text_size"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:weightSum="2">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bank"
+            android:tint="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/txtDMTBenefitiaryBankName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/content_text_size"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:weightSum="3"
+        android:layout_marginTop="15dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_marginRight="7dp">
+
+        <Button
+            android:id="@+id/btnVerify"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/dmt_benefitiary_verify"
+            android:background="@drawable/square_round_corner_colorprimary"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_content_text_small_size" />
+
+            <LinearLayout
+                android:id="@+id/lnrVerified"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/square_round_corner_colorprimary"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_check"
+                    android:tint="@color/colorWhite"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dmt_benefitiary_verified"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/btn_content_text_small_size"
+                    android:textColor="@color/colorWhite"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+            android:layout_weight="1"
+        android:text="@string/dmt_benefitiary_delete"
+        android:background="@drawable/square_round_corner_colordefault"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_content_text_small_size"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"/>
+
+        <Button
+            android:id="@+id/btnImps"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="@string/dmt_benefitiary_imps"
+            android:background="@drawable/square_round_corner_colorprimary"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_content_text_small_size"
+            android:layout_marginLeft="7dp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#bfbebe"/>
+
+</LinearLayout>

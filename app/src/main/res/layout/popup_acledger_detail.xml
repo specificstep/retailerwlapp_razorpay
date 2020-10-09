@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btn_adapter_acledger_popup"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_logout"
+            android:layout_weight="1.2"
+            android:backgroundTint="@color/colorPrimaryDark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_adapter_acledger_popup"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/round_corner" />
+
+            <TextView
+                android:id="@+id/txt_Adapter_Acledger_Amount_popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="40dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/popup_content_title_text_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_Adapter_Acledger_Payment_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorBlack"
+            android:layout_weight="0.6"
+            android:textSize="@dimen/popup_content_text_size" />
+
+        <TextView
+            android:id="@+id/txt_Adapter_Acledger_Remarks_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/popup_content_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_Adapter_Acledger_Balance_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/bottombar_content_text_size" />
+
+        <TextView
+            android:id="@+id/txt_Adapter_Acledger_DateTime_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:paddingRight="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/bottombar_content_text_size" />
+
+    </LinearLayout>
+
+</LinearLayout>

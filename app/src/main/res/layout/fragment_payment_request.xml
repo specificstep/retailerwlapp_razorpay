@@ -1,0 +1,474 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="specificstep.com.Fragments.PaymentRequestFragment">
+
+    <ScrollView
+        android:id="@+id/scrollViewPaymentRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/payment_request_add_payment_title"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/content_text_size"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="@string/payment_request_wallet_type"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                    <Spinner
+                        android:id="@+id/spnPaymentRequestWalletType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorDefault"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/edtPaymentRequestAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="10"
+                        android:textSize="@dimen/content_text_small_size"
+                        android:hint="@string/payment_request_request_amount"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrAddAmountWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtPaymentRequestAmountWords"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:textSize="@dimen/content_text_small_size"
+                        android:autoSizeTextType="uniform" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="@string/payment_request_deposit_bank"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                    <Spinner
+                        android:id="@+id/edtPaymentRequestDepositBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/content_text_small_size"
+                        android:layout_weight="0.9" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorDefault"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrAddBankDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                    <Button
+                        android:id="@+id/btnPaymentRequestBankDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.9"
+                        android:background="@color/colorPrimaryDark"
+                        android:text="Bank Details"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/edtPaymentRequestPaymentDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/content_text_small_size"
+                        android:hint="@string/payment_request_payment_date"
+                        android:clickable="true"
+                        android:editable="false"
+                        android:focusableInTouchMode="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="@string/payment_request_payment_method"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                    <Spinner
+                        android:id="@+id/spnPaymentRequestPaymentMethod"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorDefault"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrPaymentRequestAddBank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:text="@string/payment_request_bank"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/content_text_small_size" />
+
+                    <Spinner
+                        android:id="@+id/spnPaymentRequestBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/content_text_small_size"
+                        android:layout_weight="0.9" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorDefault"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrPaymentRequestAddChequeNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <EditText
+                            android:id="@+id/edtPaymentRequestChequeNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10"
+                            android:inputType="number"
+                            android:textSize="@dimen/content_text_small_size"
+                            android:hint="@string/payment_request_cheque_no" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrPaymentRequestAddBranch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/edtPaymentRequestBranch"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:textSize="@dimen/content_text_small_size"
+                            android:hint="@string/payment_request_branch" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrPaymentRequestAddTransactionId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/edtPaymentRequestTransactionId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10"
+                            android:textSize="@dimen/content_text_small_size"
+                            android:hint="@string/payment_request_transaction_id" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrPaymentRequestAddRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                            android:id="@+id/edtPaymentRequestRemarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10"
+                            android:textSize="@dimen/content_text_small_size"
+                            android:hint="@string/payment_request_remarks" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btnPaymentRequestReset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/square_round_corner_colordefault"
+                        android:backgroundTint="@color/colorDefault"
+                        android:text="@string/reset"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/btn_content_text_small_size" />
+
+                    <Button
+                        android:id="@+id/btnPaymentRequestSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/square_round_corner_colorprimary"
+                        android:text="@string/dmt_add_sender_btn_submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/btn_content_text_small_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdDepositBankDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_request_deposit_bank_title"
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/content_text_size"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_person1"
+                            android:tint="@color/colorPrimaryDark"/>
+
+                        <TextView
+                            android:id="@+id/txtPaymentRequestDetailPayeeName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:autoSizeTextType="uniform"
+                            android:paddingLeft="10dp"
+                            android:textSize="@dimen/content_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:weightSum="2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_bank"
+                            android:tint="@color/colorPrimaryDark"/>
+
+                        <TextView
+                            android:id="@+id/txtPaymentRequestDetailBankName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:paddingLeft="10dp"
+                            android:autoSizeTextType="uniform"
+                            android:textSize="@dimen/content_text_size" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPaymentRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:tint="@color/colorWhite"
+        app:srcCompat="@drawable/ic_payment_request_list"
+        app:borderWidth="0dp" />
+
+</FrameLayout>

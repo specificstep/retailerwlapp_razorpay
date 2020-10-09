@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="specificstep.com.Activities.PaymentRequestListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:weightSum="3">
+
+        <ImageButton
+            android:id="@+id/btnPaymentRequestDetailBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_back"
+            app:backgroundTint="@color/colorWhite"
+            tools:ignore="MissingPrefix"
+            android:layout_weight="1.35"/>
+
+        <TextView
+            android:id="@+id/txtPaymentRequestDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="@dimen/content_text_size"
+            android:textStyle="bold"
+            android:layout_weight="0.45" />
+
+        <ImageButton
+            android:id="@+id/imgPaymentRequestListWallet"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:src="@drawable/ic_wallet"
+            android:tint="@color/colorWhite"
+            android:layout_weight="1.2"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ll_recycler_payment_request_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imgNoDataPaymentRequestList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/nodata_found"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+</LinearLayout>

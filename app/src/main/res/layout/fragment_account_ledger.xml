@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:background="@color/colorWhite"
+    android:id="@+id/lnrAccountLedger">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/square_round_corner"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginRight="10dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtopen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:text=" Opening Balance "
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="@dimen/content_text_small_size"/>
+
+                    <TextView
+                        android:id="@+id/txtCashSummaryOpening"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/content_text_size"
+                        android:layout_below="@+id/txtopen"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/square_round_corner"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtclose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:text=" Closing Balance "
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="5dp"
+                        android:textSize="@dimen/content_text_small_size"/>
+
+                    <TextView
+                        android:id="@+id/txtCashSummaryClosing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/content_text_size"
+                        android:layout_below="@+id/txtclose"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_recycler_view_CashBook"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorWhite" />
+
+            <ListView
+                android:id="@+id/lv_trans_search_CashBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarThumbVertical="@drawable/custom_scroll" />
+
+            <ImageView
+                android:id="@+id/imgNoDataAcledger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nodata_found"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAcledger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:tint="@color/colorWhite"
+        android:src="@drawable/ic_filter"
+        app:borderWidth="0dp" />
+
+</FrameLayout>

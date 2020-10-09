@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorPrimaryDark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/filter"
+                android:textSize="@dimen/content_text_size"
+                android:paddingLeft="15dp"/>
+
+            <Button
+                android:id="@+id/btnTransSearchCancel"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_logout"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                tools:ignore="MissingPrefix" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrTransSearchDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:weightSum="2"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cashbook_filter_duration"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="0.2"/>
+
+            <ImageView
+                android:id="@+id/imgTransSearchDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_remove"
+                android:tint="@color/colorWhite"
+                android:layout_weight="1.8"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrTransSearchDurationChild"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/year"
+                            android:textSize="@dimen/content_text_small_size"/>
+
+                        <LinearLayout
+                            android:id="@+id/lnrTransSearchDurationFrom"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="8dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/square_round_corner">
+
+                            <Spinner
+                                android:id="@+id/sp_year_fragment_trans_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/content_text_small_size"
+                                style="@style/mySpinnerItemStyleNew"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/month"
+                            android:textSize="@dimen/content_text_small_size"/>
+
+                        <LinearLayout
+                            android:id="@+id/lnrTrasSearchDurationTo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/square_round_corner">
+
+                            <Spinner
+                                android:id="@+id/sp_month_fragment_trans_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/content_text_small_size"
+                                style="@style/mySpinnerItemStyleNew"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/year"
+                            android:textSize="@dimen/content_text_size"/>
+
+                        <LinearLayout
+                            android:id="@+id/lnrTrasSearchDurationFromTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:padding="8dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/square_round_corner">
+
+                            <TextView
+                                android:id="@+id/txt_TrasactionSearch_SelectedYear"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="10-2-2019"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/content_text_small_size"/>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_calendar"
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_weight="1.7" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to"
+                            android:textSize="@dimen/content_text_size"/>
+
+                        <LinearLayout
+                            android:id="@+id/lnrTransSearchDurationToTest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:padding="8dp"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/square_round_corner">
+
+                            <TextView
+                                android:id="@+id/txt_TrasactionSearch_SelectedMonth"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3"
+                                android:text="10-2-2019"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/content_text_small_size"/>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_calendar"
+                                android:tint="@color/colorPrimaryDark"
+                                android:layout_weight="1.7" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrTransSearchMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:weightSum="2"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/txtLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile"
+                android:textSize="@dimen/content_text_size"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="0.2"/>
+
+            <ImageView
+                android:id="@+id/imgTransSearchMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_remove"
+                android:tint="@color/colorWhite"
+                android:layout_weight="1.8" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnrTransSearchMobileChild"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:gravity="center_vertical"
+                android:layout_margin="15dp"
+                android:background="@drawable/square_round_corner"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/edt_mo_no_fragment_trans_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:inputType="number"
+                    android:maxLength="18"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:id="@+id/imgEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_phone"
+                    android:tint="@color/colorPrimaryDark"
+                    android:layout_weight="1.7" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_TrasactionSearch_SearchResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_margin="15dp"
+                android:background="@drawable/square_round_corner">
+
+                <TextView
+                    android:id="@+id/txt_TrasactionSearch_SelectedMobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp">
+
+            <Button
+                android:id="@+id/btnTransSearchReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset"
+                android:background="@color/transparent"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/btn_content_text_small_size" />
+
+            <Button
+                android:id="@+id/btn_search_fragment_trans_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/str_search"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/btn_content_text_small_size"
+                android:background="@color/transparent"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimaryDark"/>
+
+</LinearLayout>

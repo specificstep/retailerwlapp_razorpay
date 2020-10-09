@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:id="@+id/lnrElectricityRecharge">
+
+    <TextView
+        android:id="@+id/tv_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="Product Name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/content_title_text_size"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/grid_water_rechrge"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="9"
+        android:numColumns="3"></GridView>
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_company_logo_adapter_mo_recharge"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/tv_compnay_name_adapter_mo_recharge"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:padding="5dp"
+            android:maxLines="3"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/content_text_small_size"
+            android:textColor="@color/colorBlack" />
+
+</LinearLayout>

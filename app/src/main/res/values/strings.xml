@@ -1,0 +1,183 @@
+<resources>
+
+    <string name="app_name">NAARAD PAY</string>
+
+    <string name="currency_format">\u20B9 %1$s</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="str_user_name">User Name</string>
+    <string name="str_pwd">Password</string>
+    <string name="str_login">LOG IN</string>
+    <string name="str_remember_me">Remember Me</string>
+    <string name="str_forgot_pwd"><u>Forgot Password</u></string>
+    <string name="str_login_another_user">SIGN IN WITH OTHER USER</string>
+    <string name="confirm_signout_button">LOG OUT</string>
+    <string name="confirm_signin_with_another_user_message">Are you sure you want to sign in with another user?</string>
+    <string name="confirm_logout_message">Are you sure you want to log out?</string>
+    <string name="str_recharge">Recharge</string>
+    <string name="str_recent_trans">Recent Transaction</string>
+    <string name="str_logout">Log Out</string>
+    <string name="str_mo_no">Mobile No. or Smart No.</string>
+    <string name="str_amount">Amount</string>
+    <string name="str_proceed_to_recharge">Proceed to Recharge</string>
+    <string name="str_proceed_to_bill_pay">Proceed to Bill Pay</string>
+    <string name="str_bill_to_recharge">Fetch Bill Details</string>
+    <string name="str_view_offer_recharge">View Offers</string>
+    <string name="str_view_offer_title">Recharge Offers</string>
+    <string name="str_customer_info_title">Customer Information</string>
+    <string name="str_submit">Submit</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_order_id">Order Id: </string>
+    <string name="str_amount_no">200</string>
+    <string name="str_trans_status">Success</string>
+    <string name="str_search">Search</string>
+    <string name="str_email_or_uname">Email or Username or Mobile No</string>
+    <string name="str_otp">OTP</string>
+    <string name="str_company">Company: </string>
+    <string name="str_service_type">Service:</string>
+    <string name="Rs">\u20B9</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="register_app">Register App</string>
+    <string name="signup_app">Sign Up</string>
+
+    <string name="alert_servicer_down">No Data Found</string>
+    <string name="str_smart_no">Smart No</string>
+
+    <string name="str_change_password">Change Password</string>
+
+    <string name="str_old_password">Old Password</string>
+
+    <string name="str_new_password">New Password</string>
+    <string name="str_confirm_password">Confirm Password</string>
+    <string name="str_notification">Notification</string>
+    <string name="str_cashbook">Payment Report</string>
+    <string name="str_account_ledger">Account Ledger</string>
+    <!--<string name="str_cashbook">Cash Book</string>-->
+    <string name="title_notifications">Notifications</string>
+    <string name="str_add_complain">Write your complain here.</string>
+
+    <string name="dmt_search_sender_hint">Mobile No</string>
+
+    <string name="dmt_search_btn">Search</string>
+
+    <string name="dmt_search_popup_add_sender">Add Sender</string>
+
+
+    <!-- DMT Sender search page -->
+    <string name="dmt_search_popup_verify_user">Verify User</string>
+    <string name="dmt_search_popup_cancel">Cancel</string>
+    <string name="dmt_search_sender_amount">Amount</string>
+    <string name="dmt_add_sender_first_name">First Name *</string>
+    <string name="dmt_add_sender_last_name">Last Name *</string>
+    <string name="dmt_add_sender_mobile">Mobile Number *</string>
+
+    <!-- DMT Add Sender page -->
+    <string name="dmt_add_sender_email">Email Address</string>
+    <string name="dmt_add_sender_address">Address</string>
+    <string name="dmt_add_sender_pincode">Pincode *</string>
+    <string name="dmt_add_sender_dob">Date Of Birth *</string>
+    <string name="dmt_add_sender_btn_submit">Submit</string>
+    <string name="dmt_add_sender_btn_cancel">Cancel</string>
+    <string name="dmt_add_benefitiary_account_no">Account Number *</string>
+    <string name="dmt_add_benefitiary_account_type">Account Type *</string>
+    <string name="dmt_add_benefitiary_ifsc_code">IFSC Code *</string>
+
+    <!-- DMT Add Benefitiary page -->
+    <string name="dmt_add_benefitiary_bank_name">Bank Name *</string>
+    <string name="add_beneficiary_verify">Account Verification</string>
+    <string name="dmt_benefitiary_imps">IMPS</string>
+    <string name="dmt_benefitiary_verify">VERIFY</string>
+    <string name="dmt_benefitiary_verified">VERIFIED</string>
+
+    <!-- DMT Benefitiary list page -->
+    <string name="dmt_benefitiary_delete">DELETE</string>
+    <string name="dmt_payment_amount">Amount *</string>
+    <string name="dmt_payment_sender">Sender</string>
+    <string name="dmt_payment_sender_title">Sender Details</string>
+
+    <!-- DMT Payment page -->
+    <string name="dmt_payment_benefitiary_title">Beneficiary Details</string>
+    <string name="dmt_payment_transfer">Transfer</string>
+    <string name="dmt_success_message">Would you like to make another payment?</string>
+    <string name="payment_request_wallet_type">Wallet Type</string>
+    <string name="payment_request_request_amount">Request Amount *</string>
+
+    <!-- DMT Payment List page -->
+    <string name="payment_request_deposit_bank">Deposit Bank</string>
+
+    <!-- Payment Request -->
+    <string name="payment_request_payment_date">Payment Date *</string>
+    <string name="payment_request_payment_method">Payment Method</string>
+    <string name="payment_request_bank">Bank</string>
+    <string name="payment_request_cheque_no">Cheque No. *</string>
+    <string name="payment_request_branch">Branch *</string>
+    <string name="payment_request_remarks">Remarks *</string>
+    <string name="payment_request_transaction_id">Transaction Id *</string>
+    <string name="payment_request_add_payment_title">Add Payment Request</string>
+    <string name="payment_request_deposit_bank_title">Deposit Bank Details</string>
+    <string name="recharge_status_recharge_again">Recharge Again</string>
+    <string name="recharge_status_download">Download Receipt</string>
+    <string name="recharge_status_help">Help</string>
+
+    <!-- Recharge Status 5-3-2019 -->
+    <string name="recharge_status_details">Payment Details</string>
+    <string name="recharge_status_wallet">Wallet</string>
+    <string name="recharge_status_complain">Complain for payment</string>
+    <string name="cashbook_filter_duration">Durations</string>
+    <string name="cashbook_filter_wallet">Wallets</string>
+    <string name="title_activity_combine_transaction_list">CombineTransactionListActivity</string>
+
+    <!-- Cashbook Filter -->
+    <string name="filter">Filter By</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="reset">Reset</string>
+    <string name="year">Year:</string>
+    <string name="month">Month:</string>
+    <string name="mobile">Mobile No / Smart No</string>
+
+    <!-- Transaction Search Filter -->
+    <string name="dmt_detail_title">DMT Transaction Detail</string>
+    <string name="dmt_fees">Fees</string>
+    <string name="dmt_gst">GST</string>
+
+    <!-- DMT Detail -->
+    <string name="dmt_tds">TDS</string>
+    <string name="dmt_commission">Commission</string>
+    <string name="complain_thread_title">Thread of Complain</string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="nav_header_title">Android Studio</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="close">CLOSE</string>
+    <string-array name="circle_array">
+        <item>Circle</item>
+    </string-array>
+    <string-array name="month_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="complain_arrays">
+        <item>Recharge Status Success but not get benefit</item>
+    </string-array>
+
+</resources>

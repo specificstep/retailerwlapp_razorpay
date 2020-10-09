@@ -1,0 +1,197 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="specificstep.com.Fragments.DMTPaymentFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:hintTextAppearance="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/edtDMTPaymentAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/dmt_payment_amount"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/dmt_payment_sender"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/content_text_size"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_person1"
+                        android:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:id="@+id/txtDMTPaymentSender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoSizeTextType="uniform"
+                        android:paddingLeft="10dp"
+                        android:textSize="@dimen/content_text_size"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lnrDMTPaymentUserLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/txtDMTPaymentUserLimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginTop="10dp"
+                        android:textSize="@dimen/content_title_text_size"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/dmt_payment_benefitiary_title"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/content_title_text_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_person1"
+                        android:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:id="@+id/txtDMTPaymentName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoSizeTextType="uniform"
+                        android:paddingLeft="10dp"
+                        android:text=""
+                        android:textSize="@dimen/content_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bank"
+                        android:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:id="@+id/txtDMTPaymentAccountNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoSizeTextType="uniform"
+                        android:paddingLeft="10dp"
+                        android:text=""
+                        android:textSize="@dimen/content_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btnDMTPaymentList"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/square_round_corner_colordefault"
+                        android:text="DMT Transaction List"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/btn_content_text_small_size" />
+
+                    <Button
+                        android:id="@+id/btnDMTPaymentSubmit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="0.6"
+                        android:background="@drawable/square_round_corner_colorprimary"
+                        android:text="@string/dmt_add_sender_btn_submit"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/btn_content_text_small_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
