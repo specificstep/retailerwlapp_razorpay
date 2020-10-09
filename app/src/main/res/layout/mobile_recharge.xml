@@ -16,7 +16,9 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/content_title_text_size"
         android:visibility="gone" />
+
     <LinearLayout
+        android:id="@+id/lnrProductSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

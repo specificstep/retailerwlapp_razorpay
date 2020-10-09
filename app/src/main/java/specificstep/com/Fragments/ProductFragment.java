@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -75,6 +76,7 @@ public class ProductFragment extends Fragment {
     private final int ERROR = 1, SUCCESS_WALLET_LIST = 2;
     private TransparentProgressDialog transparentProgressDialog;
     private ArrayList<User> userArrayList;
+    private LinearLayout lnrSearch;
 
     private Context getContextInstance() {
         if (context == null) {
@@ -165,6 +167,8 @@ public class ProductFragment extends Fragment {
     private void init() {
         gridViewMobileRecharge = (GridView) view.findViewById(R.id.grid_mobile_rechrge);
         txtProductName = (TextView) view.findViewById(R.id.tv_product_name);
+        lnrSearch = (LinearLayout) view.findViewById(R.id.lnrProductSearch);
+        lnrSearch.setVisibility(View.GONE);
         txtProductName.setVisibility(View.VISIBLE);
         txtProductName.setText(strCompanyName);
 
