@@ -6,8 +6,8 @@ package specificstep.com.GlobalClasses;
 
 public class URL {
 
-    //public static String base_url = "http://www.naaradpay.in/webservices/"; //naarad pay url
-    public static String base_url = "http://192.168.30.117:8056/webservices/";
+    public static String base_url = "http://www.naaradpay.in/webservices/"; //naarad pay url
+//    public static String base_url = "http://192.168.30.117:8056/webservices/";
     //public static String base_url = "http://192.168.30.117:8086/webservices/";
 
 //    public static String base_url = "http://fast.recharge.website/webservices/";
