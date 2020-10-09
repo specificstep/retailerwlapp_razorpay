@@ -159,6 +159,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="close">CLOSE</string>
+    <string name="mob_prepaid_recharge_search">Search</string>
+    <string name="mob_prepaid_recharge_clear">Clear</string>
     <string-array name="circle_array">
         <item>Circle</item>
     </string-array>

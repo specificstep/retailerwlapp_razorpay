@@ -16,6 +16,55 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/content_title_text_size"
         android:visibility="gone" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:background="@drawable/curve_button_white"
+            android:backgroundTint="@color/colorGrey"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:src="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/edtCompanyListSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/mob_prepaid_recharge_search"
+                android:paddingLeft="10dp"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtCompanyListClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1.55"
+            android:text="@string/mob_prepaid_recharge_clear"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
 
     <GridView
         android:id="@+id/grid_electricity_rechrge"
@@ -24,5 +73,10 @@
         android:layout_margin="10dp"
         android:layout_weight="9"
         android:numColumns="3"></GridView>
-
+    <ImageView
+        android:id="@+id/imgCompanyListNoData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nodata_found"
+        android:visibility="gone" />
 </LinearLayout>

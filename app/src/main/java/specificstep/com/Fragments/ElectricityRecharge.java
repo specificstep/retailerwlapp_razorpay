@@ -1,6 +1,7 @@
 package specificstep.com.Fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,13 +11,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -56,6 +63,7 @@ public class ElectricityRecharge extends Fragment {
     private DatabaseHelper databaseHelper;
     private ArrayList<Company> companyArrayList;
     private ArrayList<Company> finalCompanyArrayList;
+    private ArrayList<Company> CompanyListDataSearch;
     private ArrayList<Product> productArrayList;
     private MenuItem menuItem;
     private Context context;
@@ -67,6 +75,9 @@ public class ElectricityRecharge extends Fragment {
     private TransparentProgressDialog transparentProgressDialog;
     ArrayList<User> userArrayList;
     ArrayList<String> menuWallet;
+    EditText edtSearch;
+    TextView txtCompanyListClear;
+    ImageView imgCompanyListNoData;
 
     private HomeActivity mainActivity() {
         return ((HomeActivity) getActivity());
@@ -147,6 +158,10 @@ public class ElectricityRecharge extends Fragment {
     }
 
     private void init() {
+
+        edtSearch = view.findViewById(R.id.edtCompanyListSearch);
+        txtCompanyListClear = view.findViewById(R.id.txtCompanyListClear);
+        imgCompanyListNoData = view.findViewById(R.id.imgCompanyListNoData);
         grid_mobile_recharge = (GridView) view.findViewById(R.id.grid_electricity_rechrge);
         String service_type = "ELECTRICITY";
         companyArrayList = databaseHelper.getCompanyDetails(service_type);
@@ -169,6 +184,68 @@ public class ElectricityRecharge extends Fragment {
         // [END]
         GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "ELECTRICITY","Electricity Bill Pay");
         grid_mobile_recharge.setAdapter(adapter);
+
+        txtCompanyListClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+
+                GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "ELECTRICITY","Electricity Bill Pay");
+                grid_mobile_recharge.setAdapter(adapter);
+                hideKeyboard(getActivity());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public void filter(String text) {
+        ArrayList<Company> temp = new ArrayList();
+        CompanyListDataSearch = new ArrayList<>();
+        for (Company d : finalCompanyArrayList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (d.getCompany_name().toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d);
+            }
+        }
+//        grid_mobile_recharge.setVisibility(View.VISIBLE);
+//        imgCompanyListNoData.setVisibility(View.GONE);
+        CompanyListDataSearch = temp;
+        if (CompanyListDataSearch != null && CompanyListDataSearch.size() > 0) {
+            GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), CompanyListDataSearch, getActivity().getSupportFragmentManager(), "ELECTRICITY","Electricity Bill Pay");
+            grid_mobile_recharge.setAdapter(adapter);
+            grid_mobile_recharge.setVisibility(View.VISIBLE);
+            imgCompanyListNoData.setVisibility(View.GONE);
+        } else {
+            grid_mobile_recharge.setVisibility(View.GONE);
+            imgCompanyListNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     //multi wallet 14-3-2019

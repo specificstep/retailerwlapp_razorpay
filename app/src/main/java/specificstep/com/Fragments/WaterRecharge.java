@@ -1,6 +1,7 @@
 package specificstep.com.Fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,16 +10,23 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,6 +61,7 @@ public class WaterRecharge extends Fragment {
     private GridView grid_mobile_recharge;
     private DatabaseHelper databaseHelper;
     private ArrayList<Company> companyArrayList;
+    private ArrayList<Company> CompanyListDataSearch;
     private ArrayList<Company> finalCompanyArrayList;
     private ArrayList<Product> productArrayList;
 
@@ -67,6 +76,9 @@ public class WaterRecharge extends Fragment {
     ArrayList<User> userArrayList;
     private final int SUCCESS_WALLET_LIST = 1, ERROR = 2;
     private Context context;
+    EditText edtSearch;
+    TextView txtCompanyListClear;
+    ImageView imgCompanyListNoData;
 
     private Context getContextInstance() {
         if (context == null) {
@@ -148,8 +160,22 @@ public class WaterRecharge extends Fragment {
         context = getActivity();
     }
 
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     private void init() {
         grid_mobile_recharge = (GridView) view.findViewById(R.id.grid_water_rechrge);
+        edtSearch = view.findViewById(R.id.edtCompanyListSearch);
+        txtCompanyListClear = view.findViewById(R.id.txtCompanyListClear);
+        imgCompanyListNoData = view.findViewById(R.id.imgCompanyListNoData);
         String service_type = "WATER";
         companyArrayList = databaseHelper.getCompanyDetails(service_type);
 
@@ -169,9 +195,63 @@ public class WaterRecharge extends Fragment {
             }
         });
         // [END]
-        GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "WATER","Water Bill Pay");
+        GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "WATER", "Water Bill Pay");
         grid_mobile_recharge.setAdapter(adapter);
+
+        txtCompanyListClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+
+                GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "WATER", "Water Bill Pay");
+                grid_mobile_recharge.setAdapter(adapter);
+                hideKeyboard(getActivity());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
+
+    public void filter(String text) {
+        ArrayList<Company> temp = new ArrayList();
+        CompanyListDataSearch = new ArrayList<>();
+        for (Company d : finalCompanyArrayList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (d.getCompany_name().toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d);
+            }
+        }
+//        grid_mobile_recharge.setVisibility(View.VISIBLE);
+//        imgCompanyListNoData.setVisibility(View.GONE);
+        CompanyListDataSearch = temp;
+        if (CompanyListDataSearch != null && CompanyListDataSearch.size() > 0) {
+            GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), CompanyListDataSearch, getActivity().getSupportFragmentManager(), "WATER", "Water Bill Pay");
+            grid_mobile_recharge.setAdapter(adapter);
+            grid_mobile_recharge.setVisibility(View.VISIBLE);
+            imgCompanyListNoData.setVisibility(View.GONE);
+        } else {
+            grid_mobile_recharge.setVisibility(View.GONE);
+            imgCompanyListNoData.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     //multi wallet 14-3-2019
     public void makeWalletCall() {
@@ -239,15 +319,13 @@ public class WaterRecharge extends Fragment {
                 }
             });
             alertDialog.show();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             LogMessage.e("Error in error dialog");
             LogMessage.e("Error : " + ex.getMessage());
             ex.printStackTrace();
             try {
                 Utility.toast(context, message);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 LogMessage.e("Error in toast message");
                 LogMessage.e("ERROR : " + e.getMessage());
             }
@@ -268,7 +346,7 @@ public class WaterRecharge extends Fragment {
                 LogMessage.e("Message : " + message);
 
                 LogMessage.e("Wallet : " + "encrypted_response : " + encrypted_response);
-                String decrypted_response = Constants.decryptAPI(context,encrypted_response);
+                String decrypted_response = Constants.decryptAPI(context, encrypted_response);
 
                 LogMessage.e("Wallet : " + "decrypted_response : " + decrypted_response);
 
@@ -294,7 +372,7 @@ public class WaterRecharge extends Fragment {
                 Constants.walletsList = walletsList;
                 Constants.walletsModelList = walletsModelList;
 
-                if(walletsModelList.size()>0) {
+                if (walletsModelList.size() > 0) {
                     Constants.showWalletPopup(getActivity());
                 }
 
@@ -312,8 +390,7 @@ public class WaterRecharge extends Fragment {
 
             } else {
             }
-        }
-        catch(JSONException e) {
+        } catch (JSONException e) {
             LogMessage.e("Wallet : " + "Error 4 : " + e.getMessage());
             e.printStackTrace();
         }
@@ -331,8 +408,7 @@ public class WaterRecharge extends Fragment {
                     transparentProgressDialog.show();
                 }
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Dlog.d("Error : " + ex.getMessage());
             ex.printStackTrace();
         }
@@ -345,8 +421,7 @@ public class WaterRecharge extends Fragment {
                 if (transparentProgressDialog.isShowing())
                     transparentProgressDialog.dismiss();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Dlog.d("Error : " + ex.getMessage());
             ex.printStackTrace();
         }

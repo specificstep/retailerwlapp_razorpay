@@ -9,13 +9,18 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -44,6 +49,8 @@ import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.LogMessage;
 import specificstep.com.utility.Utility;
 
+import static specificstep.com.GlobalClasses.Constants.hideKeyboard;
+
 
 public class MobilePostPaidRecharge extends Fragment {
 
@@ -64,7 +71,10 @@ public class MobilePostPaidRecharge extends Fragment {
     ArrayList<User> userArrayList;
     private final int ERROR = 2, SUCCESS_WALLET_LIST = 7;
     private Context context;
-
+    EditText edtSearch;
+    TextView txtCompanyListClear;
+    private ArrayList<Company> CompanyListDataSearch;
+    ImageView imgCompanyListNoData;
     private HomeActivity mainActivity() {
         return ((HomeActivity) getActivity());
     }
@@ -147,7 +157,9 @@ public class MobilePostPaidRecharge extends Fragment {
         grid_mobile_recharge = (GridView) view.findViewById(R.id.grid_mobile_postpaid_rechrge);
         String service_type = "MOBILE_POSTPAID";
         companyArrayList = databaseHelper.getCompanyDetails(service_type);
-
+        edtSearch =  view.findViewById(R.id.edtCompanyListSearch);
+        txtCompanyListClear =  view.findViewById(R.id.txtCompanyListClear);
+        imgCompanyListNoData = view.findViewById(R.id.imgCompanyListNoData);
         /* [START] - 2017_05_02 - if company have 0 product don't display this company */
         for (int i = 0; i < companyArrayList.size(); i++) {
             String companyId = companyArrayList.get(i).getId();
@@ -166,6 +178,56 @@ public class MobilePostPaidRecharge extends Fragment {
         // [END]
         GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "MOBILE_POSTPAID","Mobile Postpaid Bill Pay");
         grid_mobile_recharge.setAdapter(adapter);
+
+        txtCompanyListClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+
+                GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "MOBILE_POSTPAID","Mobile Postpaid Bill Pay");
+                grid_mobile_recharge.setAdapter(adapter);
+                hideKeyboard(getActivity());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public void filter(String text) {
+        ArrayList<Company> temp = new ArrayList();
+        CompanyListDataSearch = new ArrayList<>();
+        for (Company d : finalCompanyArrayList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (d.getCompany_name().toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d);
+            }
+        }
+        CompanyListDataSearch = temp;
+        if (CompanyListDataSearch != null && CompanyListDataSearch.size() > 0) {
+            GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), CompanyListDataSearch, getActivity().getSupportFragmentManager(), "MOBILE_POSTPAID","Mobile Postpaid Bill Pay");
+            grid_mobile_recharge.setAdapter(adapter);
+
+            grid_mobile_recharge.setVisibility(View.VISIBLE);
+            imgCompanyListNoData.setVisibility(View.GONE);
+        } else {
+            grid_mobile_recharge.setVisibility(View.GONE);
+            imgCompanyListNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     //multi wallet 14-3-2019

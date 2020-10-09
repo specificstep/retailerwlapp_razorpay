@@ -8,6 +8,7 @@
     <color name="colorServiceText">#FF9800</color>
 
     <!-- ============================================================= -->
+    <color name="colorGrey">#ededed</color>
 
 
     <color name="colorAccent">#FF4081</color>

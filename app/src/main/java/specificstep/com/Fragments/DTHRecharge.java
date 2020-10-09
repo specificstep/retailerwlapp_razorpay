@@ -13,13 +13,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +50,8 @@ import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.LogMessage;
 import specificstep.com.utility.Utility;
 
+import static specificstep.com.GlobalClasses.Constants.hideKeyboard;
+
 /**
  * Created by ubuntu on 17/1/17.
  */
@@ -67,6 +74,10 @@ public class DTHRecharge extends Fragment {
     private TransparentProgressDialog transparentProgressDialog;
     ArrayList<User> userArrayList;
     ArrayList<String> menuWallet;
+    TextView txtCompanyListClear;
+    private ArrayList<Company> CompanyListDataSearch;
+    ImageView imgCompanyListNoData;
+    EditText edtSearch;
 
     private HomeActivity mainActivity() {
         return ((HomeActivity) getActivity());
@@ -147,7 +158,9 @@ public class DTHRecharge extends Fragment {
 
         grdMobileRecharge = (GridView) view.findViewById(R.id.grid_mobile_rechrge);
         companyArrayList = databaseHelper.getCompanyDetails("DTH");
-
+        edtSearch =  view.findViewById(R.id.edtCompanyListSearch);
+        txtCompanyListClear =  view.findViewById(R.id.txtCompanyListClear);
+        imgCompanyListNoData = view.findViewById(R.id.imgCompanyListNoData);
         /* [START] - 2017_05_02 - if company have 0 product don't display this company */
         for (int i = 0; i < companyArrayList.size(); i++) {
             String companyId = companyArrayList.get(i).getId();
@@ -167,6 +180,55 @@ public class DTHRecharge extends Fragment {
 
         GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "DTH","DTH Recharge");
         grdMobileRecharge.setAdapter(adapter);
+        txtCompanyListClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+
+                GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "DTH","DTH Recharge");
+                grdMobileRecharge.setAdapter(adapter);
+                hideKeyboard(getActivity());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public void filter(String text) {
+        ArrayList<Company> temp = new ArrayList();
+        CompanyListDataSearch = new ArrayList<>();
+        for (Company d : finalCompanyArrayList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (d.getCompany_name().toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d);
+            }
+        }
+        CompanyListDataSearch = temp;
+        if (CompanyListDataSearch != null && CompanyListDataSearch.size() > 0) {
+            GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), CompanyListDataSearch, getActivity().getSupportFragmentManager(), "DTH","DTH Recharge");
+            grdMobileRecharge.setAdapter(adapter);
+
+            grdMobileRecharge.setVisibility(View.VISIBLE);
+            imgCompanyListNoData.setVisibility(View.GONE);
+        } else {
+            grdMobileRecharge.setVisibility(View.GONE);
+            imgCompanyListNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     //multi wallet 14-3-2019

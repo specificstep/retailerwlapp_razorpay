@@ -1,6 +1,7 @@
 package specificstep.com.Fragments;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,13 +13,20 @@ import android.os.Message;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +74,10 @@ public class GasRecharge extends Fragment {
     ArrayList<User> userArrayList;
     private final int SUCCESS_WALLET_LIST = 1, ERROR = 2;
     private Context context;
+    EditText edtSearch;
+    TextView txtCompanyListClear;
+    private ArrayList<Company> CompanyListDataSearch;
+    ImageView imgCompanyListNoData;
 
     private Context getContextInstance() {
         if (context == null) {
@@ -150,6 +162,9 @@ public class GasRecharge extends Fragment {
         grid_mobile_recharge = (GridView) view.findViewById(R.id.grid_gas_rechrge);
         String service_type = "GAS";
         companyArrayList = databaseHelper.getCompanyDetails(service_type);
+        edtSearch =  view.findViewById(R.id.edtCompanyListSearch);
+        txtCompanyListClear =  view.findViewById(R.id.txtCompanyListClear);
+        imgCompanyListNoData = view.findViewById(R.id.imgCompanyListNoData);
 
         /* [START] - 2017_05_02 - if company have 0 product don't display this company */
         for (int i = 0; i < companyArrayList.size(); i++) {
@@ -160,6 +175,7 @@ public class GasRecharge extends Fragment {
             }
         }
 
+
         Collections.sort(finalCompanyArrayList, new Comparator<Company>() {
             @Override
             public int compare(Company o1, Company o2) {
@@ -169,6 +185,65 @@ public class GasRecharge extends Fragment {
         // [END]
         GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "GAS", "Gas Bill Pay");
         grid_mobile_recharge.setAdapter(adapter);
+        txtCompanyListClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+
+                GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), finalCompanyArrayList, getActivity().getSupportFragmentManager(), "GAS", "Gas Bill Pay");
+                grid_mobile_recharge.setAdapter(adapter);
+                hideKeyboard(getActivity());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public void filter(String text) {
+        ArrayList<Company> temp = new ArrayList();
+        CompanyListDataSearch = new ArrayList<>();
+        for (Company d : finalCompanyArrayList) {
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if (d.getCompany_name().toLowerCase().contains(text.toLowerCase())) {
+                temp.add(d);
+            }
+        }
+        CompanyListDataSearch = temp;
+        if (CompanyListDataSearch != null && CompanyListDataSearch.size() > 0) {
+            GridViewMobileRechargeAdapter adapter = new GridViewMobileRechargeAdapter(getActivity(), CompanyListDataSearch, getActivity().getSupportFragmentManager(), "GAS", "Gas Bill Pay");
+            grid_mobile_recharge.setAdapter(adapter);
+
+            grid_mobile_recharge.setVisibility(View.VISIBLE);
+            imgCompanyListNoData.setVisibility(View.GONE);
+        } else {
+            grid_mobile_recharge.setVisibility(View.GONE);
+            imgCompanyListNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     //multi wallet 14-3-2019
