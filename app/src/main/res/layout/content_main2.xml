@@ -308,48 +308,54 @@
 
                         </LinearLayout>
 
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/ll_ChangePassword_act_main"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="5dp"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                            android:gravity="center"-->
-<!--                            android:orientation="vertical">-->
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="5dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-<!--                            <ImageView-->
-<!--                                android:layout_width="30dp"-->
-<!--                                android:layout_height="30dp"-->
-<!--                                android:padding="3dp"-->
-<!--                                android:src="@drawable/ic_menu_change_password" />-->
+                        <LinearLayout
+                            android:id="@+id/ll_ChangePassword_act_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-<!--                            <TextView-->
-<!--                                style="@style/textStyle"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:gravity="center"-->
-<!--                                android:singleLine="true"-->
-<!--                                android:text="@string/str_change_password"-->
-<!--                                android:textColor="@color/colorBlack"-->
-<!--                                android:textSize="@dimen/bottombar_content_text_size" />-->
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:padding="3dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_menu_change_password" />
 
-<!--                        </LinearLayout>-->
+                            <TextView
+                                style="@style/textStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="@string/str_change_password"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/bottombar_content_text_size" />
+
+                        </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/ll_wallettopup_act_main"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:background="?attr/selectableItemBackgroundBorderless"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:tint="@color/colorBlack"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:padding="3dp"
+                                android:layout_gravity="center_horizontal"
                                 android:src="@drawable/ic_payment_on_black_24dp" />
 
                             <TextView
@@ -363,6 +369,8 @@
                                 android:textSize="@dimen/bottombar_content_text_size" />
 
                         </LinearLayout>
+
+                        </FrameLayout>
 
                         <LinearLayout
                             android:id="@+id/lin_Notification_act_main"

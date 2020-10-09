@@ -44,6 +44,7 @@ import specificstep.com.Models.Color;
 import specificstep.com.Models.Company;
 import specificstep.com.Models.DMTAddBenefitiaryBankName;
 import specificstep.com.Models.DateTime;
+import specificstep.com.Models.PaymentGatewayModel;
 import specificstep.com.Models.Product;
 import specificstep.com.Models.State;
 import specificstep.com.Models.User;
@@ -1503,6 +1504,11 @@ public class UpdateData extends Fragment {
             if (jsonObject.getString("status").equals("1")) {
 
                 ArrayList<Color> colorArrayList = new ArrayList<Color>();
+                ArrayList<PaymentGatewayModel> paymentGatewayArrayList = new ArrayList<PaymentGatewayModel>();
+
+                String encrypted_response2 = jsonObject.getString("data3");
+                String decrypted_response2 = Constants.decryptAPI(context,encrypted_response2);
+                LogMessage.i("Decoded Payment settings : " + decrypted_response2);
 
                 String encrypted_response = jsonObject.getString("data2");
                 String decrypted_response = Constants.decryptAPI(context,encrypted_response);
@@ -1511,6 +1517,17 @@ public class UpdateData extends Fragment {
                 String encrypted_response1 = jsonObject.getString("data");
                 String decrypted_response1 = Constants.decryptAPI(context,encrypted_response1);
                 LogMessage.d("Setting Response : " + decrypted_response1);
+
+                // parse payment data
+                JSONObject objectPayment = new JSONObject(decrypted_response2);
+                JSONArray jsonArrayPayment = objectPayment.getJSONArray("paymentgateway");
+                for (int i = 0; i < jsonArrayPayment.length(); i++) {
+                    JSONObject object1 = jsonArrayPayment.getJSONObject(i);
+                    PaymentGatewayModel color = new PaymentGatewayModel();
+                    color.setId(object1.getString("id"));
+                    color.setName(object1.getString("name"));
+                    paymentGatewayArrayList.add(color);
+                }
 
                 // parse color data
                 JSONObject object = new JSONObject(decrypted_response);
@@ -1550,6 +1567,12 @@ public class UpdateData extends Fragment {
                     databaseHelper.addColors(colorArrayList);
                     progressBar.setProgress(97);
                 }
+
+                if (paymentGatewayArrayList.size() > 0) {
+                    databaseHelper.addPaymentGateway(paymentGatewayArrayList);
+                    progressBar.setProgress(97);
+                }
+
             }
 
             makeBankNameCall();

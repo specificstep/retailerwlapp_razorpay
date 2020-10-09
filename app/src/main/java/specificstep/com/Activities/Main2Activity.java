@@ -132,7 +132,7 @@ public class Main2Activity extends AppCompatActivity
     private Constants constants;
     private DatabaseHelper databaseHelper;
     private LinearLayout /*llRecharge,*/ llRecentTransaction, llLogout,
-            llMain, llUpdate, ll_wallettopup_act_main,/*llChangePassword,*/ llNotification, llCashBook,
+            llMain, llUpdate, ll_wallettopup_act_main,llChangePassword, llNotification, llCashBook,
             llAccountLedger, /*llDmt,*/
             llDmtTransactionList/*,
             llPaymentRequest, llParentUser, linParentUser, linLogOut*/;
@@ -408,7 +408,14 @@ public class Main2Activity extends AppCompatActivity
             }
             stringArrayList.add(new NavigationModels(MENU_DMT_TRANSACTION_LIST, R.drawable.ic_transaction_report, 0));
             stringArrayList.add(new NavigationModels(MENU_PAYMENT_REQUEST, R.drawable.ic_payment_on_black_24dp, 0));
-            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+            if(databaseHelper.getPaymentGateway().size()>0) {
+                stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+                ll_wallettopup_act_main.setVisibility(View.VISIBLE);
+                llChangePassword.setVisibility(View.GONE);
+            } else {
+                ll_wallettopup_act_main.setVisibility(View.GONE);
+                llChangePassword.setVisibility(View.VISIBLE);
+            }
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
             stringArrayList.add(new NavigationModels(MENU_NOTIFICATION, R.drawable.ic_notifications_black_24dp, 0));
@@ -996,7 +1003,7 @@ public class Main2Activity extends AppCompatActivity
         //llRecharge = (LinearLayout) findViewById(R.id.lin_recharge_act_main);
         llRecentTransaction = (LinearLayout) findViewById(R.id.lin_recent_trans_act_main);
         llUpdate = (LinearLayout) findViewById(R.id.lin_update_button);
-//        llChangePassword = (LinearLayout) findViewById(R.id.ll_ChangePassword_act_main);
+        llChangePassword = (LinearLayout) findViewById(R.id.ll_ChangePassword_act_main);
         ll_wallettopup_act_main = (LinearLayout) findViewById(R.id.ll_wallettopup_act_main);
         llNotification = (LinearLayout) findViewById(R.id.lin_Notification_act_main);
         llCashBook = (LinearLayout) findViewById(R.id.lin_CashBook_act_main);
@@ -1074,7 +1081,7 @@ public class Main2Activity extends AppCompatActivity
         llLogout.setOnClickListener(this);
         llUpdate.setOnClickListener(this);
         ll_wallettopup_act_main.setOnClickListener(this);
-//        llChangePassword.setOnClickListener(this);
+        llChangePassword.setOnClickListener(this);
         llNotification.setOnClickListener(this);
         llCashBook.setOnClickListener(this);
 
@@ -1176,11 +1183,11 @@ public class Main2Activity extends AppCompatActivity
             position = 19;
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);
-        }/*else if (v == llChangePassword) {
+        }else if (v == llChangePassword) {
             position = 7;
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);
-        }*/ else if (v == llNotification) {
+        } else if (v == llNotification) {
             position = 8;
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);

@@ -12,6 +12,7 @@ import specificstep.com.Models.Color;
 import specificstep.com.Models.Company;
 import specificstep.com.Models.DMTAddBenefitiaryBankName;
 import specificstep.com.Models.Default;
+import specificstep.com.Models.PaymentGatewayModel;
 import specificstep.com.Models.Product;
 import specificstep.com.Models.State;
 import specificstep.com.Models.User;
@@ -95,6 +96,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_DMT_BANK_ID = "bank_id";
     private static final String KEY_DMT_BANK_NAME = "bank_name";
     private static final String KEY_DMT_BANK_IFSC_CODE = "ifsc_code";
+
+
+    private static final String TABLE_PAYMENT_GATEWAY = "payment_gateway";
+    private static final String KEY_PAYMENT_GATEWAY_ID = "payment_id";
+    private static final String KEY_PAYMENT_GATEWAY_NAME = "name";
 
     /*private static final String TABLE_WALLET_LIST = "wallet_list";
     private static final String KEY_WALLET_NAME = "wallet_name";
@@ -181,6 +187,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_TABLE_DMT_BANK = "CREATE TABLE " + TABLE_DMT_BANK + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY," + KEY_DMT_BANK_ID + " TEXT," + KEY_DMT_BANK_NAME + " TEXT," + KEY_DMT_BANK_IFSC_CODE + " TEXT" + ")";
 
+        String CREATE_TABLE_PAYMENT_GATEWAY = "CREATE TABLE " + TABLE_PAYMENT_GATEWAY + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," + KEY_PAYMENT_GATEWAY_ID + " TEXT," + KEY_PAYMENT_GATEWAY_NAME + " TEXT" + ")";
+
+
         /*String CREATE_TABLE_WALLET = "CREATE TABLE " + TABLE_WALLET_LIST + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY," + KEY_WALLET_NAME + " TEXT," + KEY_WALLET_TYPE + " TEXT," + KEY_WALLET_BALANCE + " TEXT" + ")";
 
@@ -224,6 +234,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_STATUS_COLOR);
         db.execSQL(CREATE_TABLE_DMT_BANK);
+        db.execSQL(CREATE_TABLE_PAYMENT_GATEWAY);
         /*db.execSQL(CREATE_TABLE_WALLET);
         db.execSQL(CREATE_TABLE_DEPOSIT_BANK);
         db.execSQL(CREATE_TABLE_ALL_BANK);*/
@@ -245,6 +256,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUS_COLOR);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DMT_BANK);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT_GATEWAY);
         /*db.execSQL("DROP TABLE IF EXISTS " + TABLE_WALLET_LIST);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DEPOSIT_BANKS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_BANKS);*/
@@ -295,11 +307,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_TABLE_DMT_BANK = "CREATE TABLE " + TABLE_DMT_BANK + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY," + KEY_DMT_BANK_ID + " TEXT," + KEY_DMT_BANK_NAME + " TEXT," + KEY_DMT_BANK_IFSC_CODE + " TEXT" + ")";
 
+        String CREATE_TABLE_PAYMENT_GATEWAY = "CREATE TABLE " + TABLE_PAYMENT_GATEWAY + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," + KEY_PAYMENT_GATEWAY_ID + " TEXT," + KEY_PAYMENT_GATEWAY_NAME + " TEXT" + ")";
+
         db.execSQL(CREATE_TABLE_COMPANY);
         db.execSQL(CREATE_TABLE_PRODUCT);
         db.execSQL(CREATE_TABLE_STATE);
         db.execSQL(CREATE_TABLE_STATUS_COLOR);
         db.execSQL(CREATE_TABLE_DMT_BANK);
+        db.execSQL(CREATE_TABLE_PAYMENT_GATEWAY);
 
     }
 
@@ -351,6 +367,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(KEY_DMT_BANK_NAME, colorArrayList.get(i).getBank_name());
                 values.put(KEY_DMT_BANK_IFSC_CODE, colorArrayList.get(i).getIfsc_code());
                 db.insert(TABLE_DMT_BANK, null, values);
+            }
+
+            //db.close(); // Closing database connection
+        } catch (Exception e) {
+            Dlog.d(e.toString());
+        }
+
+    }
+
+    public void addPaymentGateway(ArrayList<PaymentGatewayModel> paymentGatewayModelArrayList) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            for (int i = 0; i < paymentGatewayModelArrayList.size(); i++) {
+
+                values.put(KEY_PAYMENT_GATEWAY_ID, paymentGatewayModelArrayList.get(i).getId());
+                values.put(KEY_PAYMENT_GATEWAY_NAME, paymentGatewayModelArrayList.get(i).getName());
+                db.insert(TABLE_PAYMENT_GATEWAY, null, values);
             }
 
             //db.close(); // Closing database connection
@@ -568,6 +602,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMPANY);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATUS_COLOR);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DMT_BANK);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT_GATEWAY);
 
             createTable(db);
             //db.close();
@@ -599,7 +634,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 getCount(TABLE_PRODUCT) == 0 ||
                 getCount(TABLE_COMPANY) == 0 ||
                 getCount(TABLE_STATUS_COLOR) == 0 ||
-                getCount(TABLE_DMT_BANK) == 0) {
+                getCount(TABLE_DMT_BANK) == 0 /*||
+                getCount(TABLE_PAYMENT_GATEWAY) == 0*/) {
             return false;
         }
         return true;
@@ -693,6 +729,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Dlog.d(e.toString());
         }
     }
+
+    public void deletePaymentGateway() {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.execSQL("DELETE FROM " + TABLE_PAYMENT_GATEWAY);
+            //db.close();
+        } catch (Exception e) {
+            Dlog.d(e.toString());
+        }
+    }
+
 
     /*public void deleteWalletList() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1009,6 +1056,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 textColor.setBank_id(cursor.getString(1));
                 textColor.setBank_name(cursor.getString(2));
                 textColor.setIfsc_code(cursor.getString(3));
+                textColorArrayList.add(textColor);
+            }
+            while (cursor.moveToNext());
+        }
+
+        //db.close();
+        return textColorArrayList;
+    }
+
+    public ArrayList<PaymentGatewayModel> getPaymentGateway() {
+
+        ArrayList<PaymentGatewayModel> textColorArrayList = new ArrayList<PaymentGatewayModel>();
+        String selectQuery = "SELECT * FROM " + TABLE_PAYMENT_GATEWAY;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                PaymentGatewayModel textColor = new PaymentGatewayModel();
+                textColor.setId(cursor.getString(1));
+                textColor.setName(cursor.getString(2));
                 textColorArrayList.add(textColor);
             }
             while (cursor.moveToNext());
