@@ -408,14 +408,14 @@ public class Main2Activity extends AppCompatActivity
             }
             stringArrayList.add(new NavigationModels(MENU_DMT_TRANSACTION_LIST, R.drawable.ic_transaction_report, 0));
             stringArrayList.add(new NavigationModels(MENU_PAYMENT_REQUEST, R.drawable.ic_payment_on_black_24dp, 0));
-            if(databaseHelper.getPaymentGateway().size()>0) {
+            /*if(databaseHelper.getPaymentGateway().size()>0) {
                 stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
                 ll_wallettopup_act_main.setVisibility(View.VISIBLE);
                 llChangePassword.setVisibility(View.GONE);
-            } else {
+            } else {*/
                 ll_wallettopup_act_main.setVisibility(View.GONE);
                 llChangePassword.setVisibility(View.VISIBLE);
-            }
+            //}
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
             stringArrayList.add(new NavigationModels(MENU_NOTIFICATION, R.drawable.ic_notifications_black_24dp, 0));
