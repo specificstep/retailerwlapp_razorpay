@@ -22,12 +22,13 @@
         app:headerLayout="@layout/nav_header_home"
         app:itemIconTint="@color/colorPrimary">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <include
+                android:id="@+id/header"
                 layout="@layout/nav_header_home"
                 android:visibility="invisible" />
 
@@ -35,8 +36,10 @@
                 android:id="@+id/lst_NavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null"></ListView>
+                android:divider="@null"
+                android:layout_below="@+id/header"
+                android:layout_marginBottom="90dp"></ListView>
 
-        </LinearLayout>
+        </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

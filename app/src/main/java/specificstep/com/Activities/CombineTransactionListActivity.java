@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -19,7 +21,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import specificstep.com.Adapters.CombineTabAdapter;
 import specificstep.com.Database.DatabaseHelper;
@@ -39,6 +45,7 @@ import specificstep.com.R;
 import specificstep.com.utility.Dlog;
 import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.LogMessage;
+import specificstep.com.utility.MyPrefs;
 import specificstep.com.utility.Utility;
 
 public class CombineTransactionListActivity extends AppCompatActivity {
@@ -70,6 +77,10 @@ public class CombineTransactionListActivity extends AppCompatActivity {
     private boolean isDTH = false;
     ArrayList<String> adapterPos;
     int pos;
+    TextView txtVersion;
+    Thread thread;
+    private MyPrefs prefs;
+    private Constants constants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +94,9 @@ public class CombineTransactionListActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(CombineTransactionListActivity.this);
         userArrayList = databaseHelper.getUserDetail();
         adapterPos = new ArrayList<>();
+        constants = new Constants();
         dialog = new Dialog(CombineTransactionListActivity.this);
+        prefs = new MyPrefs(CombineTransactionListActivity.this, constants.PREF_NAME);
         try {
             adapter = new CombineTabAdapter(getSupportFragmentManager());
             for (int i = 0; i < Constants.serviceModelArrayList.size(); i++) {
@@ -183,6 +196,68 @@ public class CombineTransactionListActivity extends AppCompatActivity {
                 }
             }
         });
+
+        txtVersion = (TextView) findViewById(R.id.txtNavVersion);
+
+        thread = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!thread.isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    // update TextView here!
+                                    String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
+                                    String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
+                                    if (TextUtils.equals(updateDate, "0")) {
+                                        txtVersion.setText("v" + Constants.APP_VERSION);
+                                    } else {
+                                        String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                                        String curTime = dateFormat.format(Calendar.getInstance().getTime());
+                                        SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+                                        Date dateUpdate = df.parse(updateTime1);
+                                        Date dateCurrent = df.parse(curTime);
+
+                                            /*long difference = dateCurrent.getTime() - dateUpdate.getTime();
+                                            int days = (int) (difference / (1000 * 60 * 60 * 24));
+                                            int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
+                                            int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+                                            hours = (hours < 0 ? -hours : hours);*/
+                                        long diff = dateCurrent.getTime() - dateUpdate.getTime();
+                                        long seconds = diff / 1000;
+                                        long minutes = seconds / 60;
+                                        long hours = minutes / 60;
+                                        long days = hours / 24;
+
+                                        int hr = (int) (minutes / 60); //since both are ints, you get an int
+                                        int min = (int) (minutes % 60);
+                                        System.out.printf("%d:%02d", hr, min);
+
+                                        if(hr > 0) {
+                                            txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + hr + "hr:" + min + "min ago");
+                                        } else {
+                                            txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + minutes + "min ago");
+                                        }
+                                    }
+
+                                } catch (Exception e) {
+                                    System.out.println(e.toString());
+                                }
+
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread.start();
 
     }
 

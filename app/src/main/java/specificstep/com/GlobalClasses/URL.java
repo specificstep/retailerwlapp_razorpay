@@ -6,7 +6,8 @@ package specificstep.com.GlobalClasses;
 
 public class URL {
 
-    public static String base_url = "http://www.sharprecharge.in/webservices/"; //sharp recharge url
+    //public static String base_url = "http://swamiagencies.com/webservices/"; //swami agencies url
+    public static String base_url = "http://192.168.30.117:8056/webservices/"; //swami agencies url
 
     public static String register = base_url + "register";
     public static String company = base_url + "company";

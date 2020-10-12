@@ -3,6 +3,7 @@ package specificstep.com.Activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -59,8 +60,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -200,6 +206,8 @@ public class Main2Activity extends AppCompatActivity
 
     // Custom navigation menu
     private ListView lstNavigation;
+    TextView txtVersion;
+    Thread thread;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -258,6 +266,7 @@ public class Main2Activity extends AppCompatActivity
         tv_multi_wallet = (Spinner) header.findViewById(R.id.tv_multi_wallet);
         tv_lnr_multi_wallet = (LinearLayout) header.findViewById(R.id.tv_lnr_multi_wallet);
 
+
         Constants.chaneBackground(Main2Activity.this, (LinearLayout) header.findViewById(R.id.lnrNavHeader));
         //set icon as per package
         Constants.chaneIcon(Main2Activity.this, (CircleImageView) header.findViewById(R.id.profile_image));
@@ -304,9 +313,6 @@ public class Main2Activity extends AppCompatActivity
 
         checkServices();
         //getCurrentVersion();
-        if (Constants.checkInternet(Main2Activity.this)) {
-            updateDataAfterLogin();
-        }
         Timer timer = new Timer();
         TimerTask hourlyTask = new TimerTask() {
             @Override
@@ -375,6 +381,68 @@ public class Main2Activity extends AppCompatActivity
     public void setCustomNavigation() {
         try {
             lstNavigation = (ListView) findViewById(R.id.lst_NavigationView);
+            txtVersion = (TextView) findViewById(R.id.txtNavVersion);
+
+            thread = new Thread() {
+
+                @Override
+                public void run() {
+                    try {
+                        while (!thread.isInterrupted()) {
+                            Thread.sleep(1000);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        // update TextView here!
+                                        String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
+                                        String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
+                                        if (TextUtils.equals(updateDate, "0")) {
+                                            txtVersion.setText("v" + Constants.APP_VERSION);
+                                        } else {
+                                            String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                                            String curTime = dateFormat.format(Calendar.getInstance().getTime());
+                                            SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+                                            Date dateUpdate = df.parse(updateTime1);
+                                            Date dateCurrent = df.parse(curTime);
+
+                                            /*long difference = dateCurrent.getTime() - dateUpdate.getTime();
+                                            int days = (int) (difference / (1000 * 60 * 60 * 24));
+                                            int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
+                                            int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+                                            hours = (hours < 0 ? -hours : hours);*/
+                                            long diff = dateCurrent.getTime() - dateUpdate.getTime();
+                                            long seconds = diff / 1000;
+                                            long minutes = seconds / 60;
+                                            long hours = minutes / 60;
+                                            long days = hours / 24;
+
+                                            int hr = (int) (minutes / 60); //since both are ints, you get an int
+                                            int min = (int) (minutes % 60);
+                                            System.out.printf("%d:%02d", hr, min);
+
+                                            if(hr > 0) {
+                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + hr + "hr:" + min + "min ago");
+                                            } else {
+                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + minutes + "min ago");
+                                            }
+                                        }
+
+                                    } catch (Exception e) {
+                                        System.out.println(e.toString());
+                                    }
+
+                                }
+                            });
+                        }
+                    } catch (InterruptedException e) {
+                    }
+                }
+            };
+
+            thread.start();
+
             ArrayList<NavigationModels> stringArrayList = new ArrayList<NavigationModels>();
             // All menu items name
             stringArrayList.add(new NavigationModels(MENU_HOME, R.drawable.ic_home, 0));
@@ -914,6 +982,14 @@ public class Main2Activity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Constants.checkInternet(Main2Activity.this)) {
+            updateDataAfterLogin();
+        }
+    }
+
     public void parseAlertResponse(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -965,22 +1041,65 @@ public class Main2Activity extends AppCompatActivity
         } else
             Dlog.d("Data not empty");
         // Update data if date change
-        String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
+        /*String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
         String currentDate = DateTime.getDate();
+        Date currentTime = Calendar.getInstance().getTime();*/
+        String updateDate1 = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
+        String currentDate = DateTime.getDate();
+        String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
         if (TextUtils.equals(updateDate, "0")) {
             checkDataUpdateRequire = true;
         } else
             Dlog.d("Update date available");
-        if (!TextUtils.equals(updateDate, currentDate)) {
-            checkDataUpdateRequire = true;
-        } else
-            Dlog.d("Update date and current date are same");
-        if (checkDataUpdateRequire) {
-            position = 6;
-            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-            intent.putExtra("position", position);
-            intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
-            startActivity(intent);
+
+        /*SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+        String current = df.format(currentTime);*/
+        try {
+            /*Date currentStr = df.parse(current);
+            Date updateStr = df.parse(prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));*/
+
+            String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+            String curTime = dateFormat.format(Calendar.getInstance().getTime());
+            SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+            Date dateUpdate = df.parse(updateTime);
+            Date dateCurrent = df.parse(curTime);
+
+            long difference = dateCurrent.getTime() - dateUpdate.getTime();
+            int days = (int) (difference / (1000 * 60 * 60 * 24));
+            int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
+            int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+            hours = (hours < 0 ? -hours : hours);
+
+            if(!TextUtils.equals(updateDate, currentDate)) {
+                checkDataUpdateRequire = true;
+            } else if(hours>=4){
+                checkDataUpdateRequire = true;
+            } else {
+
+            }
+
+            if (checkDataUpdateRequire) {
+                position = 6;
+                Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
+                startActivity(intent);
+            }
+
+            /*if (!TextUtils.equals(updateDate, currentDate) && hours>=1) {
+                checkDataUpdateRequire = true;
+            } else
+                Dlog.d("Update date and current date are same");
+            if (checkDataUpdateRequire) {
+                position = 6;
+                Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
+                startActivity(intent);
+            }*/
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
