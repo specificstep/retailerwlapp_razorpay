@@ -57,6 +57,7 @@ import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import specificstep.com.Adapters.NavigationDrawerAdapter;
+import specificstep.com.BuildConfig;
 import specificstep.com.Database.DatabaseHelper;
 import specificstep.com.Database.NotificationTable;
 import specificstep.com.Fragments.AccountLedgerFragment;
@@ -926,7 +927,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                         String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
                                         String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
                                         if (TextUtils.equals(updateDate, "0")) {
-                                            txtVersion.setText("v" + Constants.APP_VERSION);
+                                            txtVersion.setText("v" + BuildConfig.VERSION_NAME);
                                         } else {
                                             String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
                                             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
@@ -951,9 +952,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                             System.out.printf("%d:%02d", hr, min);
 
                                             if(hr > 0) {
-                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + hr + "hr:" + min + "min ago");
+                                                txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + hr + "hr:" + min + "min ago");
                                             } else {
-                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + minutes + "min ago");
+                                                txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + minutes + "min ago");
                                             }
                                         }
 
@@ -1055,6 +1056,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             /*if(databaseHelper.getPaymentGateway().size()>0) {
                 stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             }*/
+            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
             stringArrayList.add(new NavigationModels(MENU_NOTIFICATION, R.drawable.ic_notifications_black_24dp, 0));

@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import specificstep.com.Adapters.CombineTabAdapter;
+import specificstep.com.BuildConfig;
 import specificstep.com.Database.DatabaseHelper;
 import specificstep.com.Fragments.DMTPaymentsList;
 import specificstep.com.Fragments.DTHTransactionList;
@@ -214,7 +215,7 @@ public class CombineTransactionListActivity extends AppCompatActivity {
                                     String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
                                     String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
                                     if (TextUtils.equals(updateDate, "0")) {
-                                        txtVersion.setText("v" + Constants.APP_VERSION);
+                                        txtVersion.setText("v" + BuildConfig.VERSION_NAME);
                                     } else {
                                         String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
@@ -239,9 +240,9 @@ public class CombineTransactionListActivity extends AppCompatActivity {
                                         System.out.printf("%d:%02d", hr, min);
 
                                         if(hr > 0) {
-                                            txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + hr + "hr:" + min + "min ago");
+                                            txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + hr + "hr:" + min + "min ago");
                                         } else {
-                                            txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + minutes + "min ago");
+                                            txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + minutes + "min ago");
                                         }
                                     }
 

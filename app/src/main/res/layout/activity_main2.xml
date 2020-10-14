@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@null"
-                android:layout_below="@+id/header"
-                android:layout_marginBottom="90dp"></ListView>
+                android:layout_below="@+id/header"></ListView>
 
         </RelativeLayout>
     </com.google.android.material.navigation.NavigationView>

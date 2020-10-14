@@ -11,6 +11,10 @@ public class MyPrefs {
         myPrefs = context.getSharedPreferences(prefsName, 0);
     }
 
+    public boolean contain(String key) {
+        return myPrefs.contains(key);
+    }
+
     public void saveString(String key, String value) {
         prefEditor = myPrefs.edit();
         prefEditor.putString(key, value);

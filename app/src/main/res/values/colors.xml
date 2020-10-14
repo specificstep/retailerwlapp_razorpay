@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--Sharp Recharge colors:-->
-    <color name="colorPrimary">#2ec888</color>
-    <color name="colorPrimaryDark">#2ec888</color>
-    <color name="colorLayoutBackground">#2ec888</color>
-    <color name="colorServiceText">#385856</color>
-
+    <!--Naarad Pay colors:-->
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#FF9800</color>
+    <color name="colorLayoutBackground">#FF9800</color>
+    <color name="colorServiceText">#FF9800</color>
     <!-- ============================================================= -->
     <color name="colorGrey">#ededed</color>
 

@@ -74,6 +74,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import specificstep.com.Adapters.BannerAdapter;
 import specificstep.com.Adapters.NavigationDrawerAdapter;
 import specificstep.com.Adapters.ServicesAdapter;
+import specificstep.com.BuildConfig;
 import specificstep.com.Database.DatabaseHelper;
 import specificstep.com.Database.NotificationTable;
 import specificstep.com.GlobalClasses.AppController;
@@ -398,7 +399,7 @@ public class Main2Activity extends AppCompatActivity
                                         String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
                                         String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
                                         if (TextUtils.equals(updateDate, "0")) {
-                                            txtVersion.setText("v" + Constants.APP_VERSION);
+                                            txtVersion.setText("v" + BuildConfig.VERSION_NAME);
                                         } else {
                                             String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
                                             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
@@ -423,9 +424,9 @@ public class Main2Activity extends AppCompatActivity
                                             System.out.printf("%d:%02d", hr, min);
 
                                             if(hr > 0) {
-                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + hr + "hr:" + min + "min ago");
+                                                txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + hr + "hr:" + min + "min ago");
                                             } else {
-                                                txtVersion.setText("v" + Constants.APP_VERSION + "       Last Update:  " + minutes + "min ago");
+                                                txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + minutes + "min ago");
                                             }
                                         }
 
@@ -481,8 +482,9 @@ public class Main2Activity extends AppCompatActivity
                 ll_wallettopup_act_main.setVisibility(View.VISIBLE);
                 llChangePassword.setVisibility(View.GONE);
             } else {*/
-                ll_wallettopup_act_main.setVisibility(View.GONE);
-                llChangePassword.setVisibility(View.VISIBLE);
+                ll_wallettopup_act_main.setVisibility(View.VISIBLE);
+                llChangePassword.setVisibility(View.GONE);
+            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             //}
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
@@ -1038,68 +1040,54 @@ public class Main2Activity extends AppCompatActivity
         // Update data if database is empty
         if (databaseHelper.checkEmpty() == false) {
             checkDataUpdateRequire = true;
-        } else
+        } else {
             Dlog.d("Data not empty");
-        // Update data if date change
-        /*String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
-        String currentDate = DateTime.getDate();
-        Date currentTime = Calendar.getInstance().getTime();*/
-        String updateDate1 = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
-        String currentDate = DateTime.getDate();
-        String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
-        if (TextUtils.equals(updateDate, "0")) {
-            checkDataUpdateRequire = true;
-        } else
-            Dlog.d("Update date available");
+            // Update data if date change
+            String updateDate1 = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
+            String currentDate = DateTime.getDate();
+            String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
 
-        /*SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
-        String current = df.format(currentTime);*/
-        try {
-            /*Date currentStr = df.parse(current);
-            Date updateStr = df.parse(prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));*/
+            try {
+                if (!prefs.contain(constants.PREF_UPDATE_DATE)) {
+                    checkDataUpdateRequire = true;
+                } else {
+                    try {
+                        Dlog.d("Update date available");
+                        String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                        String curTime = dateFormat.format(Calendar.getInstance().getTime());
+                        SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+                        Date dateUpdate = df.parse(updateTime);
+                        Date dateCurrent = df.parse(curTime);
 
-            String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
-            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-            String curTime = dateFormat.format(Calendar.getInstance().getTime());
-            SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
-            Date dateUpdate = df.parse(updateTime);
-            Date dateCurrent = df.parse(curTime);
+                        long diff = dateCurrent.getTime() - dateUpdate.getTime();
+                        long seconds = diff / 1000;
+                        long minutes = seconds / 60;
+                        long hours = minutes / 60;
+                        long days = hours / 24;
 
-            long difference = dateCurrent.getTime() - dateUpdate.getTime();
-            int days = (int) (difference / (1000 * 60 * 60 * 24));
-            int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
-            int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
-            hours = (hours < 0 ? -hours : hours);
+                        if (!TextUtils.equals(updateDate, currentDate)) {
+                            checkDataUpdateRequire = true;
+                        } else if (hours >= 4) {
+                            checkDataUpdateRequire = true;
+                        } else {
 
-            if(!TextUtils.equals(updateDate, currentDate)) {
-                checkDataUpdateRequire = true;
-            } else if(hours>=4){
-                checkDataUpdateRequire = true;
-            } else {
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
+                }
 
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            if (checkDataUpdateRequire) {
-                position = 6;
-                Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
-                startActivity(intent);
-            }
-
-            /*if (!TextUtils.equals(updateDate, currentDate) && hours>=1) {
-                checkDataUpdateRequire = true;
-            } else
-                Dlog.d("Update date and current date are same");
-            if (checkDataUpdateRequire) {
-                position = 6;
-                Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
-                startActivity(intent);
-            }*/
-        } catch (ParseException e) {
-            e.printStackTrace();
+        }
+        if (checkDataUpdateRequire) {
+            position = 6;
+            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+            intent.putExtra("position", position);
+            intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
+            startActivity(intent);
         }
     }
 

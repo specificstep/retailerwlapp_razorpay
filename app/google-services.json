@@ -1,52 +1,37 @@
 {
   "project_info": {
-    "project_number": "65218035340",
-    "firebase_url": "https://sharp-recharge-retailer.firebaseio.com",
-    "project_id": "sharp-recharge-retailer",
-    "storage_bucket": "sharp-recharge-retailer.appspot.com"
+    "project_number": "1048309055732",
+    "firebase_url": "https://naaran-pay.firebaseio.com",
+    "project_id": "naaran-pay",
+    "storage_bucket": "naaran-pay.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:65218035340:android:73749265dda4c31a",
+        "mobilesdk_app_id": "1:1048309055732:android:54cb9fa3fb23f2b598dea1",
         "android_client_info": {
-          "package_name": "specificstep.com.sharprecharge"
+          "package_name": "specificstep.com.naaradpay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "65218035340-e1hmld9ch49nu80kn4gifaeor6v6mpl3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "specificstep.com.sharprecharge",
-            "certificate_hash": "a1698a39339ccf74a312602e8d6148d07c0dfcbb"
-          }
-        },
-        {
-          "client_id": "65218035340-hpg8mhaqgoh8r6bjdpufs9mne17nefrj.apps.googleusercontent.com",
+          "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBiVsZXtgqLCeV7QUNWv9p396i-jUKJjX4"
+          "current_key": "AIzaSyDJq6M1jpVVdGckbUV9z_5jL4jvPQ4CBMY"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "65218035340-hpg8mhaqgoh8r6bjdpufs9mne17nefrj.apps.googleusercontent.com",
+              "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
