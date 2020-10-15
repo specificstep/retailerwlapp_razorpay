@@ -83,4 +83,6 @@ public class URL {
     //2019_12_3 - Banner
     public static String banner = base_url + "banner";
 
+    public URL(String strURL) {
+    }
 }

@@ -161,6 +161,9 @@
     <string name="close">CLOSE</string>
     <string name="mob_prepaid_recharge_search">Search</string>
     <string name="mob_prepaid_recharge_clear">Clear</string>
+
+    <string name="msg_token_fmt">Firebase Token </string>
+
     <string-array name="circle_array">
         <item>Circle</item>
     </string-array>

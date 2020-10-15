@@ -4,6 +4,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,6 +57,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -78,6 +83,7 @@ import specificstep.com.BuildConfig;
 import specificstep.com.Database.DatabaseHelper;
 import specificstep.com.Database.NotificationTable;
 import specificstep.com.GlobalClasses.AppController;
+import specificstep.com.GlobalClasses.Config;
 import specificstep.com.GlobalClasses.Constants;
 import specificstep.com.GlobalClasses.MyLocation;
 import specificstep.com.GlobalClasses.ServicesModel;
@@ -342,6 +348,10 @@ public class Main2Activity extends AppCompatActivity
                 System.out.println("Drawer POS: " + drawerPos);
             }
         });
+
+        if (Constants.checkInternet(Main2Activity.this)) {
+            updateDataAfterLogin();
+        }
 
     }
 
@@ -987,9 +997,6 @@ public class Main2Activity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.checkInternet(Main2Activity.this)) {
-            updateDataAfterLogin();
-        }
     }
 
     public void parseAlertResponse(String response) {
@@ -1043,7 +1050,6 @@ public class Main2Activity extends AppCompatActivity
         } else {
             Dlog.d("Data not empty");
             // Update data if date change
-            String updateDate1 = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
             String currentDate = DateTime.getDate();
             String updateDate = prefs.retriveString(constants.PREF_UPDATE_DATE, "0");
 
@@ -1055,10 +1061,13 @@ public class Main2Activity extends AppCompatActivity
                         Dlog.d("Update date available");
                         String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
                         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                        /*SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd-MM-yyyy");
+                        String curDate = dateFormatDate.format(currentDate);
+                        String upDate = dateFormatDate.format(updateDate);*/
                         String curTime = dateFormat.format(Calendar.getInstance().getTime());
-                        SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
-                        Date dateUpdate = df.parse(updateTime);
-                        Date dateCurrent = df.parse(curTime);
+                        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm a", Locale.US);
+                        Date dateUpdate = df.parse(updateDate + " " + updateTime);
+                        Date dateCurrent = df.parse(currentDate + " " + curTime);
 
                         long diff = dateCurrent.getTime() - dateUpdate.getTime();
                         long seconds = diff / 1000;
