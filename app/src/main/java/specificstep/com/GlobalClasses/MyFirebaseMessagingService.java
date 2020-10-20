@@ -43,9 +43,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.e(TAG, "Data Payload: " + remoteMessage.getData().toString());
-
             try {
-                JSONObject json = new JSONObject(remoteMessage.getData().toString());
+                JSONObject json = new JSONObject(String.valueOf(remoteMessage.getData()));
                 handleDataMessage(json);
             } catch (Exception e) {
                 Log.e(TAG, "Exception: " + e.getMessage());
@@ -76,14 +75,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             JSONObject data = json.getJSONObject("data");
 
             String title = data.getString("title");
-            String message = data.getString("message");
-            boolean isBackground = data.getBoolean("is_background");
-
+            String message = data.getString("body");
+            //boolean isBackground = data.getBoolean("is_background");
 
             Log.e(TAG, "title: " + title);
             Log.e(TAG, "message: " + message);
-            Log.e(TAG, "isBackground: " + isBackground);
-
+            //Log.e(TAG, "isBackground: " + isBackground);
 
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
                 // app is in foreground, broadcast the push message
@@ -100,7 +97,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Intent resultIntent = new Intent(getApplicationContext(), SplashActivity.class);
                 resultIntent.putExtra("message", message);
                 resultIntent.putExtra("title", title);
-                    showNotificationMessage(getApplicationContext(), title, message, "", resultIntent);
+                showNotificationMessage(getApplicationContext(), title, message, "", resultIntent);
+
+                /*LocalBroadcastManager.getInstance(this).sendBroadcast(resultIntent);
+
+                // play notification sound
+                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
+                notificationUtils.playNotificationSound();*/
+
 
                 // check for image attachment
 //                if (TextUtils.isEmpty(imageUrl)) {

@@ -1,0 +1,9 @@
+V1.5 updates:
+- Solve redundant update data issue.
+- BBPS bill payment issues:
+	-> Solve not showing full amount issue at fetch bill time.
+	-> Solve validation issue.
+	-> Display due date after fetch bill.
+	-> Solve showing null value where name not found in fetch bill.
+- Solve issue of displaying single fragment multiple times.
+- Solve double click back issue from some fragments.

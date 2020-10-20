@@ -164,8 +164,9 @@ public class ChangePasswordFragment extends Fragment implements View.OnClickList
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-                    Intent intent = new Intent(getActivity(), Main2Activity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getActivity(), Main2Activity.class);
+                    startActivity(intent);*/
+                    getFragmentManager().popBackStackImmediate();
                     return true;
                 }
                 return false;

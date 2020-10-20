@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
@@ -71,9 +73,19 @@ public class SplashActivity extends Activity {
             String token = FirebaseInstanceId.getInstance().getToken();
             Log.d("firebase_token", token);
 
-            if (getIntent().hasExtra("title")) {
+            /*if (getIntent().hasExtra("title")) {
                 String title = getIntent().getStringExtra("title");
                 Log.d("firebase_title", title);
+            }*/
+            /*if (getIntent().hasExtra("notification")) {
+                String data= getIntent().getStringExtra("notification");
+                JSONObject obj = new JSONObject(data);
+                String title = obj.getString("title");
+                Log.d("firebase_title: ", title);
+            }*/
+            if(getIntent().hasExtra("message")) {
+                String dataMsg = getIntent().getStringExtra("message");
+                System.out.println("Message FCM: " + dataMsg);
             }
         } catch (Exception unused) {
             unused.printStackTrace();

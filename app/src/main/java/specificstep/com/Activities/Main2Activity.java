@@ -1059,13 +1059,14 @@ public class Main2Activity extends AppCompatActivity
                 } else {
                     try {
                         Dlog.d("Update date available");
-                        String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                        //String updateTime = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                        String updateTime = prefs.retriveString(constants.PREF_UPDATE_TIME, "0");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
                         /*SimpleDateFormat dateFormatDate = new SimpleDateFormat("dd-MM-yyyy");
                         String curDate = dateFormatDate.format(currentDate);
                         String upDate = dateFormatDate.format(updateDate);*/
-                        String curTime = dateFormat.format(Calendar.getInstance().getTime());
-                        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm a", Locale.US);
+                        String curTime = /*dateFormat.format(*/DateTime.getTime()/*)*/;
+                        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.US);
                         Date dateUpdate = df.parse(updateDate + " " + updateTime);
                         Date dateCurrent = df.parse(currentDate + " " + curTime);
 
@@ -1074,6 +1075,10 @@ public class Main2Activity extends AppCompatActivity
                         long minutes = seconds / 60;
                         long hours = minutes / 60;
                         long days = hours / 24;
+
+                        if(hours<0) {
+                            hours = -hours;
+                        }
 
                         if (!TextUtils.equals(updateDate, currentDate)) {
                             checkDataUpdateRequire = true;

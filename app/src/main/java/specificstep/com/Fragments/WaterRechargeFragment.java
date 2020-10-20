@@ -142,7 +142,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
     private ArrayAdapter<String> adapterCircleName;
 
     /* All views */
-    private ImageView imgAllContacts;
+    //private ImageView imgAllContacts;
     private EditText edtMobileNumber, edtName;
     public static EditText edtAmount;
     private TextView txtCompanyName, txtProductName, txtChangeProduct/*, txtBrowsePlans*/;
@@ -154,7 +154,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
     private LinearLayout llNameView, llIsCreditView, llCircleContainer, llAmount;
     ImageView company_image;
     // [END]
-
+    String str_due_date = "";
     String company_name1 = "";
     String product_name1 = "";
     String company_id1 = "";
@@ -325,7 +325,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
         llAmount = (LinearLayout) view.findViewById(R.id.ll_Recharge_AmountView);
         btnBill = (Button) view.findViewById(R.id.btn_view_bill_fragment_recharge);
         /* [START] - 2017_05_23 - Add contact image in mobile recharge screen. */
-        imgAllContacts = (ImageView) view.findViewById(R.id.img_Recharge_AllContacts);
+        //imgAllContacts = (ImageView) view.findViewById(R.id.img_Recharge_AllContacts);
         // [END]
         imgNumberIcon = (ImageView) view.findViewById(R.id.imgNumberIcon);
 //        imgNumberIcon.setBackground(getResources().getDrawable(R.drawable.ic_electricity));
@@ -567,7 +567,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
         txtChangeCompany.setOnClickListener(this);
         txtChangeProduct.setOnClickListener(this);
         btnProcess.setOnClickListener(this);
-        imgAllContacts.setOnClickListener(this);
+        //imgAllContacts.setOnClickListener(this);
         btnBill.setOnClickListener(this);
 
         /* Set Text Change listener, get default value of state spinner, when user insert mobile no */
@@ -778,15 +778,15 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
                     }
                     // [END]
                     break;
-                case R.id.img_Recharge_AllContacts:
-                    /* [START] - 2017_05_23 - Display contact application and select contact from them and display selected number. */
+                /*case R.id.img_Recharge_AllContacts:
+                    *//* [START] - 2017_05_23 - Display contact application and select contact from them and display selected number. *//*
                     if (Build.VERSION.SDK_INT >= 23) {
                         readContactPermission();
                     } else {
                         showContacts();
                     }
                     // [END]
-                    break;
+                    break;*/
                 case R.id.btn_view_bill_fragment_recharge:
                     if (!TextUtils.isEmpty(edtMobileNumber.getText().toString())) {
                         showProgressDialog();
@@ -850,6 +850,11 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
                 JSONObject obj = new JSONObject(Constants.decryptAPI(context, encrypted_string));
                 edtAmount.setText(obj.getString("amount") + "");
                 strCustomerName = obj.getString("customer_name");
+                if(obj.has("due_date")) {
+                str_due_date = obj.getString("due_date");
+                } else {
+                    str_due_date = "";
+                }
                 btnProcess.performClick();
             } else {
                 final AlertDialog alertDialog = new AlertDialog.Builder(getContextInstance()).create();
@@ -1565,6 +1570,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
         TextView txtCustomerName = (TextView) dialog.findViewById(R.id.tv_customer_name_confirm_dialog);
         //TextView txtProductName = (TextView) dialog.findViewById(R.id.tv_product_name_confirm_dialog);
         TextView tv_amount = (TextView) dialog.findViewById(R.id.tv_amount_confirm_dialog);
+        TextView tv_due_data = (TextView) dialog.findViewById(R.id.tv_due_date_confirm_dialog);
         //TextView tv_state = (TextView) dialog.findViewById(R.id.tv_state_confirm_dialog);
         TextView tv_mo_no = (TextView) dialog.findViewById(R.id.tv_mo_no_confirm_dialog);
         ImageView img = (ImageView) dialog.findViewById(R.id.img_company_comfirm_dialog);
@@ -1572,6 +1578,13 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
         Button btn_confirm = (Button) dialog.findViewById(R.id.btn_confirm_confirm_dialog);
         btn_confirm.setOnClickListener(this);
         btn_cancel.setOnClickListener(this);
+
+        if (!TextUtils.isEmpty(str_due_date) && !str_due_date.equals("null")) {
+            tv_due_data.setText("Due Date: " + str_due_date);
+            tv_due_data.setVisibility(View.VISIBLE);
+        } else {
+            tv_due_data.setVisibility(View.GONE);
+        }
 
         if (!TextUtils.isEmpty(strCustomerName)) {
             txtCustomerName.setText("Customer Name: " + strCustomerName);

@@ -292,8 +292,9 @@ public class ComplainReportFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-                    Intent intent = new Intent(getActivity(), Main2Activity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getActivity(), Main2Activity.class);
+                    startActivity(intent);*/
+                    getActivity().finish();
                     return true;
                 }
                 return false;

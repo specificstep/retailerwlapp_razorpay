@@ -540,8 +540,9 @@ public class RecentTransactionFragment extends Fragment implements RecentTransLi
                     public boolean onKey(View v, int keyCode, KeyEvent event) {
                         if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                             // handle back button's click listener
-                            Intent intent = new Intent(getContextInstance(), Main2Activity.class);
-                            startActivity(intent);
+                            /*Intent intent = new Intent(getContextInstance(), Main2Activity.class);
+                            startActivity(intent);*/
+                            getActivity().finish();
                             return true;
                         } else {
                             return false;

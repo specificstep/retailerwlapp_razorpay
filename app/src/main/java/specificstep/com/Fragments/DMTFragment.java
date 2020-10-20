@@ -87,6 +87,15 @@ public class DMTFragment extends Fragment {
     public static String senderId = "";
     private SharedPreferences sharedPreferences;
 
+    private Context getContextInstance() {
+        if (context == null) {
+            context = DMTFragment.this.getActivity();
+            return context;
+        } else {
+            return context;
+        }
+    }
+
     private HomeActivity mainActivity() {
         return ((HomeActivity) getActivity());
     }
@@ -267,9 +276,12 @@ public class DMTFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-                    Intent intent = new Intent(getActivity(), Main2Activity.class);
-                    startActivity(intent);
-                    sharedPreferences.edit().putString(Constants.DMT_MOBILE, "").commit();
+                    try {
+                        getActivity().finish();
+                        sharedPreferences.edit().putString(Constants.DMT_MOBILE, "").commit();
+                    } catch (Exception e) {
+                        Dlog.d(e.toString());
+                    }
                     return true;
                 }
                 return false;
@@ -489,11 +501,11 @@ public class DMTFragment extends Fragment {
         }
     }
 
-    @Override
+   /* @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
         super.onSaveInstanceState(outState);
-    }
+    }*/
 
     public void showVerifyDialog() {
         try {

@@ -139,7 +139,7 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
     private ArrayAdapter<String> adapterCircleName;
 
     /* All views */
-    private ImageView imgAllContacts;
+    //private ImageView imgAllContacts;
     private EditText edtMobileNumber, edtName;
     public static EditText edtAmount;
     private TextView txtCompanyName, txtProductName, txtChangeProduct;
@@ -324,7 +324,7 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
         company_image = (ImageView) view.findViewById(R.id.tv_company_image);
         llAmount = (LinearLayout) view.findViewById(R.id.ll_Recharge_AmountView);
         btnBill = (Button) view.findViewById(R.id.btn_view_bill_fragment_recharge);
-        imgAllContacts = (ImageView) view.findViewById(R.id.img_Recharge_AllContacts);
+        //imgAllContacts = (ImageView) view.findViewById(R.id.img_Recharge_AllContacts);
 
         chkIsCredit = (CheckBox) view.findViewById(R.id.chk_Recharge_IsCredit);
 
@@ -1002,7 +1002,7 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
         txtChangeCompany.setOnClickListener(this);
         txtChangeProduct.setOnClickListener(this);
         btnProcess.setOnClickListener(this);
-        imgAllContacts.setOnClickListener(this);
+        //imgAllContacts.setOnClickListener(this);
         btnBill.setOnClickListener(this);
 
         /* Set Text Change listener, get default value of state spinner, when user insert mobile no */
@@ -1213,15 +1213,15 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
                     }
                     // [END]
                     break;
-                case R.id.img_Recharge_AllContacts:
-                    /* [START] - 2017_05_23 - Display contact application and select contact from them and display selected number. */
+                /*case R.id.img_Recharge_AllContacts:
+                    *//* [START] - 2017_05_23 - Display contact application and select contact from them and display selected number. *//*
                     if (Build.VERSION.SDK_INT >= 23) {
                         readContactPermission();
                     } else {
                         showContacts();
                     }
                     // [END]
-                    break;
+                    break;*/
                 case R.id.btn_view_bill_fragment_recharge:
 
                     if (valid()) {
@@ -1307,7 +1307,11 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
                 edtAmount.setText(obj.getString("amount") + "");
                 //edtName.setText(obj.getString("customer_name")+"");
                 strCustomerName = obj.getString("customer_name");
-                str_due_date = obj.getString("due_date");
+                if(obj.has("due_date")) {
+                    str_due_date = obj.getString("due_date");
+                } else {
+                    str_due_date = "";
+                }
                 btnProcess.performClick();
             } else {
                 if (jsonObject.getString("msg").contains("1002")) {
@@ -1952,7 +1956,7 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
         } else {
             txtCustomerName.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(str_due_date)) {
+        if (!TextUtils.isEmpty(str_due_date) && !str_due_date.equals("null")) {
             tv_due_date_confirm_dialog.setText("Due Date: " + str_due_date);
             tv_due_date_confirm_dialog.setVisibility(View.VISIBLE);
         } else {

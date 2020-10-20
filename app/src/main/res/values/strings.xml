@@ -148,6 +148,7 @@
     <string name="dmt_commission">Commission</string>
     <string name="complain_thread_title">Thread of Complain</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="true">Retailer</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="title_activity_main2">Main2Activity</string>
