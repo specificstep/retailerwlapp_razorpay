@@ -244,6 +244,7 @@ public class NotificationFragment extends Fragment {
                     // handle back button's click listener
                     Intent intent = new Intent(getActivity(), Main2Activity.class);
                     startActivity(intent);
+                    getActivity().finish();
                     return true;
                 }
                 return false;

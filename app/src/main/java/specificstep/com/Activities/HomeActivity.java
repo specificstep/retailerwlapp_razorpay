@@ -90,6 +90,7 @@ import specificstep.com.utility.Dlog;
 import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.LogMessage;
 import specificstep.com.utility.MyPrefs;
+import specificstep.com.utility.UpdateData_ApiCall;
 import specificstep.com.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -199,6 +200,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     Thread thread;
     TextView txtVersion;
     private MyPrefs prefs;
+    UpdateData_ApiCall updateData_apiCall;
 
     private Context getContextInstance() {
         if (context == null) {
@@ -320,7 +322,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             openFragment(MENU_ACCOUNT_LEDGER, new AccountLedgerFragment());
             displayBottomNavigationDynamic(ACCOUNT_LEGER);
         } else if (position == 6) {
-            openFragment(MENU_UPDATE_DATA, new UpdateData());
+            updateData_apiCall = new UpdateData_ApiCall(HomeActivity.this);
+
+//            openFragment(MENU_UPDATE_DATA, new UpdateData());
             displayBottomNavigationDynamic(UPDATE_DATA);
         } else if (position == 7) {
             openFragment(MENU_CHANGE_PASSWORD, new ChangePasswordFragment());
@@ -440,13 +444,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             // Open update fragment
             if (TextUtils.equals(requireUpdate, "1")) {
-                FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
-                UpdateData updateData1 = new UpdateData();
-                Bundle bundle = new Bundle();
-                bundle.putString(constants.KEY_REQUIRE_UPDATE, requireUpdate);
-                updateData1.setArguments(bundle);
-                fragment.replace(R.id.container, updateData1);
-                fragment.commit();
+                updateData_apiCall = new UpdateData_ApiCall(context);
+
+//                FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
+//                UpdateData updateData1 = new UpdateData();
+//                Bundle bundle = new Bundle();
+//                bundle.putString(constants.KEY_REQUIRE_UPDATE, requireUpdate);
+//                updateData1.setArguments(bundle);
+//                fragment.replace(R.id.container, updateData1);
+//                fragment.commit();
                 displayBottomNavigationDynamic(UPDATE_DATA);
             }
         }
@@ -1117,7 +1123,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         openFragment(MENU_ACCOUNT_LEDGER, new AccountLedgerFragment());
                         displayBottomNavigationDynamic(ACCOUNT_LEGER);
                     } else if (TextUtils.equals(selectedMenuName, MENU_UPDATE_DATA)) {
-                        openFragment(MENU_UPDATE_DATA, new UpdateData());
+                        updateData_apiCall = new UpdateData_ApiCall(HomeActivity.this);
+
+//                        openFragment(MENU_UPDATE_DATA, new UpdateData());
                         displayBottomNavigationDynamic(UPDATE_DATA);
                     } else if (TextUtils.equals(selectedMenuName, MENU_DMT)) {
                         openFragment(MENU_DMT, new DMTFragment());
@@ -1478,10 +1486,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction(accountLedgerFragment);
             displayBottomNavigationDynamic(ACCOUNT_LEGER);
         } else if (id == R.id.nav_update_data) {
-            title = MENU_UPDATE_DATA;
-            getSupportActionBar().setTitle(title);
-            UpdateData updateDataFragment = new UpdateData();
-            fragmentTransaction(updateDataFragment);
+            updateData_apiCall = new UpdateData_ApiCall(context);
+
+//            title = MENU_UPDATE_DATA;
+//            getSupportActionBar().setTitle(title);
+//            UpdateData updateDataFragment = new UpdateData();
+//            fragmentTransaction(updateDataFragment);
             displayBottomNavigationDynamic(UPDATE_DATA);
         } else if (id == R.id.nav_ChangePassword) {
             title = MENU_CHANGE_PASSWORD;
@@ -1729,7 +1739,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             openFragment(MENU_NOTIFICATION, new NotificationFragment());
             displayBottomNavigationDynamic(NOTIFICATION);
         } else if (v == llUpdate) {
-            openFragment(MENU_UPDATE_DATA, new UpdateData());
+            updateData_apiCall = new UpdateData_ApiCall(context);
+
+//            openFragment(MENU_UPDATE_DATA, new UpdateData());
             displayBottomNavigationDynamic(UPDATE_DATA);
         }
         // Notification bottom navigation listener
