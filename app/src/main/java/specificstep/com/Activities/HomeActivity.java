@@ -870,6 +870,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getBundleData();
+    }
+
     // [START] - Remove bottom navigation and drawer in update screen. */
     private void
     displayBottomNavigationDynamic(int fragmentNumber) {

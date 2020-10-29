@@ -824,7 +824,7 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
                             strMacAddress,
                             strOtpCode,
                             Constants.APP_VERSION,
-                            strCompanyId,
+                            strProductId,
                             strMobileNumber
                     };
                     String response = InternetUtil.getUrlData(url, parameters, parametersValues);

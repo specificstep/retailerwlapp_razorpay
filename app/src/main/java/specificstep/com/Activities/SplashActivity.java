@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
@@ -34,18 +35,26 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import io.fabric.sdk.android.Fabric;
 import specificstep.com.Database.DatabaseHelper;
+import specificstep.com.Database.NotificationTable;
 import specificstep.com.GlobalClasses.Config;
 import specificstep.com.GlobalClasses.Constants;
 import specificstep.com.GlobalClasses.NotificationUtils;
+import specificstep.com.GlobalClasses.URL;
 import specificstep.com.GlobalClasses.VersionChecker;
+import specificstep.com.Models.DateTime;
+import specificstep.com.Models.NotificationModel;
+import specificstep.com.Models.User;
 import specificstep.com.R;
 import specificstep.com.utility.Dlog;
+import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.NotificationUtil;
+import specificstep.com.utility.Utility;
 
 /**
  * Created by ubuntu on 4/1/17.
@@ -58,8 +67,9 @@ public class SplashActivity extends Activity {
     SharedPreferences sharedPreferences;
     Constants constants;
     String is_app_installed_form_play_store;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
     String title = "";
+    private final int ERROR = 2, SUCCESS_NOTIFICATION_CLICK = 1;
+    private ArrayList<User> userArrayList;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -67,86 +77,164 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.acticity_splash);
-
         try {
+
+            Dlog.d("Package name: " + getApplicationContext().getPackageName());
+            Constants.APP_PACKAGE_NAME = getApplicationContext().getPackageName();
+
+            try {
+                //set background as per package name
+                Constants.chaneBackground(SplashActivity.this, (LinearLayout) findViewById(R.id.lnrSplash));
+                //set icon as per package name
+                Constants.chaneIcon(SplashActivity.this, (ImageView) findViewById(R.id.imageView));
+
+            } catch (Exception e) {
+                Dlog.d("Splash crash");
+            }
+
+            context = SplashActivity.this;
+            databaseHelper = new DatabaseHelper(SplashActivity.this);
+            userArrayList = databaseHelper.getUserDetail();
+            constants = new Constants();
+            sharedPreferences = getSharedPreferences(constants.SHAREEDPREFERENCE, Context.MODE_PRIVATE);
+
+            /* [START] - Manage create short cut function */
+            is_app_installed_form_play_store = sharedPreferences.getString
+                    (constants.isAppInstallFromPlayStore, constants.isAppInstallFromPlayStore_No);
+
+            if (is_app_installed_form_play_store.equals("No")) {
+                Dlog.d("Splash : " + "App install from play store");
+            } else {
+                sharedPreferences.edit().putString(constants.isAppInstallFromPlayStore, "Yes").commit();
+                Dlog.d("Splash : " + "App install from mobile");
+                addShortcut(SplashActivity.this);
+            }
+
             FirebaseInstanceId.getInstance().getToken();
             String token = FirebaseInstanceId.getInstance().getToken();
-            Log.d("firebase_token", token);
+            System.out.println("firebase_token: " + token);
 
-            /*if (getIntent().hasExtra("title")) {
-                String title = getIntent().getStringExtra("title");
-                Log.d("firebase_title", title);
-            }*/
-            /*if (getIntent().hasExtra("notification")) {
-                String data= getIntent().getStringExtra("notification");
-                JSONObject obj = new JSONObject(data);
-                String title = obj.getString("title");
-                Log.d("firebase_title: ", title);
-            }*/
-            if(getIntent().hasExtra("message")) {
-                String dataMsg = getIntent().getStringExtra("message");
-                System.out.println("Message FCM: " + dataMsg);
-            }
-        } catch (Exception unused) {
-            unused.printStackTrace();
-        }
-        Dlog.d("Package name: " + getApplicationContext().getPackageName());
-        Constants.APP_PACKAGE_NAME = getApplicationContext().getPackageName();
-
-        try {
-            //set background as per package name
-            Constants.chaneBackground(SplashActivity.this, (LinearLayout) findViewById(R.id.lnrSplash));
-            //set icon as per package name
-            Constants.chaneIcon(SplashActivity.this, (ImageView) findViewById(R.id.imageView));
-
-        } catch (Exception e) {
-            Dlog.d("Splash crash");
-        }
-
-        context = SplashActivity.this;
-        databaseHelper = new DatabaseHelper(SplashActivity.this);
-        constants = new Constants();
-        sharedPreferences = getSharedPreferences(constants.SHAREEDPREFERENCE, Context.MODE_PRIVATE);
-
-        /* [START] - Manage create short cut function */
-        is_app_installed_form_play_store = sharedPreferences.getString
-                (constants.isAppInstallFromPlayStore, constants.isAppInstallFromPlayStore_No);
-        // [END]
-//        try {
-//            if (Constants.checkInternet(SplashActivity.this)) {
-//                getCheckVersion();
-//            } else {
-//                timeOutSuccess();
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.toString());
-//        }
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //timeOutSuccess();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //timeOutSuccess();
                     /*if(Constants.checkInternet(SplashActivity.this)) {
                         getCurrentVersion();
                     } else {
                         timeOutSuccess();
                     }*/
-                getCurrentVersion();
-            }
-        }, 1000);
 
-        if (is_app_installed_form_play_store.equals("No")) {
-            Dlog.d("Splash : " + "App install from play store");
-        } else {
-            sharedPreferences.edit().putString(constants.isAppInstallFromPlayStore, "Yes").commit();
-            Dlog.d("Splash : " + "App install from mobile");
-            addShortcut(SplashActivity.this);
+
+                    if(getIntent().hasExtra("message")) {
+                        String dataMsg = getIntent().getStringExtra("message");
+                        String dataTitle = getIntent().getStringExtra("title");
+                        String dataNotificationId = getIntent().getStringExtra("notificationId");
+                        System.out.println("Message FCM: " + dataMsg);
+
+                        NotificationModel model = new NotificationModel();
+                        model.title = dataTitle;
+                        model.message = dataMsg;
+                        model.receiveDateTime = DateTime.getCurrentDateTime();
+                        model.saveDateTime = DateTime.getCurrentDateTime();
+                        model.readFlag = "0";
+                        model.readDateTime = "";
+                        Log.d("Notification", "title : " + model.title + "Message : " + model.message);
+                        new NotificationTable(SplashActivity.this).addNotificationData(model);
+
+                        makeNotificationClickCall(dataNotificationId);
+
+                        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("position", 8);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        getCurrentVersion();
+                    }
+                }
+            }, 1000);
+
+            // [END]
+
+
+
+        } catch (Exception unused) {
+            System.out.println("Splash Receive: " + unused.toString());
+            //unused.printStackTrace();
         }
-        // [END]
-
 
     }
+
+    public void makeNotificationClickCall(String id) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = URL.notification_click;
+                    String[] parameters = {
+                            "username",
+                            "mac_address",
+                            "otp_code",
+                            "app",
+                            "is_read",
+                            "id"
+                    };
+                    String[] parametersValues = {
+                            userArrayList.get(0).getUser_name(),
+                            userArrayList.get(0).getDevice_id(),
+                            userArrayList.get(0).getOtp_code(),
+                            Constants.APP_VERSION,
+                            "1",
+                            id
+                    };
+                    String response = InternetUtil.getUrlData(url, parameters, parametersValues);
+                    Dlog.d("Alert response: " + response);
+                    myHandler.obtainMessage(SUCCESS_NOTIFICATION_CLICK, response).sendToTarget();
+                } catch (Exception ex) {
+                    Dlog.d("  Error  : " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
+    // handle thread messages
+    private Handler myHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == ERROR) {
+                displayErrorDialog(msg.obj.toString());
+            } else if (msg.what == SUCCESS_NOTIFICATION_CLICK) {
+                //parseSuccessBannerResponse(msg.obj.toString());
+                System.out.println("Notification Send success");
+            }
+        }
+    };
+
+    // display error in dialog
+    private void displayErrorDialog(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (!((Activity) context).isFinishing()) {
+                    new android.app.AlertDialog.Builder(SplashActivity.this)
+                            .setTitle("Info!")
+                            .setCancelable(false)
+                            .setMessage(message)
+                            .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -154,7 +242,6 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
 

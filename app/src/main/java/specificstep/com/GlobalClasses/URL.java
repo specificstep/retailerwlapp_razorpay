@@ -6,8 +6,8 @@ package specificstep.com.GlobalClasses;
 
 public class URL {
 
-    //public static String base_url = "http://192.168.30.117:8056/webservices/"; //swami agencies url
-    public static String base_url = "http://www.naaradpay.in/webservices/"; //naaradpay recharge group url
+    public static String base_url = "http://192.168.30.117:8056/webservices/"; //swami agencies url
+    //public static String base_url = "http://www.naaradpay.in/webservices/"; //naaradpay recharge group url
 
     public static String register = base_url + "register";
     public static String company = base_url + "company";
@@ -79,6 +79,8 @@ public class URL {
     public static String addbank = base_url + "bank";
     public static String addpaymentrequest = base_url + "paymentrequest";
     public static String razorpay_paymentrequest = base_url + "paymentrequest/status";
+
+    public static String notification_click = base_url + "notification";
 
     //2019_12_3 - Banner
     public static String banner = base_url + "banner";

@@ -50,6 +50,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -86,6 +87,7 @@ import specificstep.com.GlobalClasses.AppController;
 import specificstep.com.GlobalClasses.Config;
 import specificstep.com.GlobalClasses.Constants;
 import specificstep.com.GlobalClasses.MyLocation;
+import specificstep.com.GlobalClasses.NotificationUtils;
 import specificstep.com.GlobalClasses.ServicesModel;
 import specificstep.com.GlobalClasses.TransparentProgressDialog;
 import specificstep.com.GlobalClasses.URL;
@@ -140,7 +142,7 @@ public class Main2Activity extends AppCompatActivity
     ArrayList<String> menuWallet;
     private final int ERROR = 2, SUCCESSALERT = 3,
             SUCCESS_SERVICE = 4, SUCCESS_WALLET_LIST = 5, SUCCESS_BANNER = 6,
-            AUTHENTICATION_FAIL = 10;
+            AUTHENTICATION_FAIL = 10, SUCCESS_NOTIFICATION_CLICK = 11;
     private MyPrefs prefs;
     private Constants constants;
     private DatabaseHelper databaseHelper;
@@ -215,6 +217,7 @@ public class Main2Activity extends AppCompatActivity
     private ListView lstNavigation;
     TextView txtVersion;
     Thread thread;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -352,6 +355,27 @@ public class Main2Activity extends AppCompatActivity
         if (Constants.checkInternet(Main2Activity.this)) {
             updateDataAfterLogin();
         }
+
+        this.mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    try {
+                        String dataMsg = getIntent().getStringExtra("message");
+                        String dataTitle = getIntent().getStringExtra("title");
+                        String dataNotificationId = getIntent().getStringExtra("notificationId");
+                        System.out.println("Message FCM: " + dataMsg);
+                        Intent intent1 = new Intent(Main2Activity.this, HomeActivity.class);
+                        intent1.putExtra("position", 8);
+                        startActivity(intent1);
+                        System.out.println("Background FCM Message: " + dataMsg);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
 
     }
 
@@ -994,9 +1018,13 @@ public class Main2Activity extends AppCompatActivity
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(this.mRegistrationBroadcastReceiver, new IntentFilter(Config.REGISTRATION_COMPLETE));
+        LocalBroadcastManager.getInstance(this).registerReceiver(this.mRegistrationBroadcastReceiver, new IntentFilter(Config.PUSH_NOTIFICATION));
+        NotificationUtils.clearNotifications(getApplicationContext());
     }
 
     public void parseAlertResponse(String response) {
@@ -1410,6 +1438,9 @@ public class Main2Activity extends AppCompatActivity
                 parseSuccessWalletResponse(msg.obj.toString());
             } else if (msg.what == SUCCESS_BANNER) {
                 parseSuccessBannerResponse(msg.obj.toString());
+            } else if (msg.what == SUCCESS_NOTIFICATION_CLICK) {
+                //parseSuccessBannerResponse(msg.obj.toString());
+                System.out.println("Notification Send success");
             } else if (msg.what == AUTHENTICATION_FAIL) {
                 dismissProgressDialog();
                 Utility.logout(Main2Activity.this, msg.obj.toString());
@@ -1749,6 +1780,7 @@ public class Main2Activity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         // stop notification update count down timer
         unregisterNotificationReceiver();
     }

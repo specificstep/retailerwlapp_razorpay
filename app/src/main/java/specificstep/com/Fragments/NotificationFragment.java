@@ -95,14 +95,14 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_notification, null);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        /*getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mainActivity().getSupportActionBar().setTitle("Notification");
         mainActivity().setNotificationCounter();
 
         initControls();
         setListView();
         setListener();
-        getBundleData();
+        getBundleData();*/
 
         return view;
     }
@@ -235,6 +235,16 @@ public class NotificationFragment extends Fragment {
     public void onResume() {
         super.onResume();
         registerNotificationReceiver();
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        mainActivity().getSupportActionBar().setTitle("Notification");
+        mainActivity().setNotificationCounter();
+
+        initControls();
+        setListView();
+        setListener();
+        getBundleData();
+
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -242,8 +252,15 @@ public class NotificationFragment extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     // handle back button's click listener
-                    Intent intent = new Intent(getActivity(), Main2Activity.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getActivity(), Main2Activity.class);
+                    startActivity(intent);*/
+                    if(getFragmentManager().getBackStackEntryCount() == 1) {
+                        Intent intent = new Intent(getActivity(), Main2Activity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else {
+                        getActivity().finish();
+                    }
                     return true;
                 }
                 return false;

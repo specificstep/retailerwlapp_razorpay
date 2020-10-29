@@ -2,20 +2,24 @@ package specificstep.com.GlobalClasses;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import androidx.core.app.NotificationCompat;
@@ -29,6 +33,12 @@ import java.util.Date;
 import java.util.List;
 import java.net.URL;
 
+import specificstep.com.Activities.HomeActivity;
+import specificstep.com.Activities.Main2Activity;
+import specificstep.com.Activities.SplashActivity;
+import specificstep.com.Database.NotificationTable;
+import specificstep.com.Models.DateTime;
+import specificstep.com.Models.NotificationModel;
 import specificstep.com.R;
 
 public class NotificationUtils {
@@ -41,11 +51,11 @@ public class NotificationUtils {
         this.mContext = mContext;
     }
 
-    public void showNotificationMessage(String title, String message, String timeStamp, Intent intent) {
-        showNotificationMessage(title, message, timeStamp, intent, null);
+    public void showNotificationMessage(String title, String message, String notificationId, String timeStamp, Intent intent, String from) {
+        showNotificationMessage(title, message, notificationId, timeStamp, intent, null, from);
     }
 
-    public void showNotificationMessage(final String title, final String message, final String timeStamp, Intent intent, String imageUrl) {
+    public void showNotificationMessage(final String title, final String message, final String notificationId, final String timeStamp, Intent intent, String imageUrl, String from) {
         // Check for empty push message
         if (TextUtils.isEmpty(message))
             return;
@@ -54,7 +64,7 @@ public class NotificationUtils {
         // notification icon
         final int icon = R.mipmap.ic_launcher;
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         final PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
                         mContext,
@@ -76,21 +86,21 @@ public class NotificationUtils {
                 Bitmap bitmap = getBitmapFromURL(imageUrl);
 
                 if (bitmap != null) {
-                    showBigNotification(bitmap, mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                    showBigNotification(bitmap, mBuilder, icon, title, message, notificationId, timeStamp, resultPendingIntent, alarmSound, from);
                 } else {
-                    showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
+                    showSmallNotification(mBuilder, icon, title, message, notificationId, timeStamp, resultPendingIntent, alarmSound, from);
                 }
             }
         } else {
-            showSmallNotification(mBuilder, icon, title, message, timeStamp, resultPendingIntent, alarmSound);
-            playNotificationSound();
+            showSmallNotification(mBuilder, icon, title, message, notificationId, timeStamp, resultPendingIntent, alarmSound, from);
+            //playNotificationSound();
         }
     }
 
 
-    private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
+    private void showSmallNotification(NotificationCompat.Builder mBuilder, int icon, String title, String message, String notificationId, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound, String from) {
 
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        /*NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
         inboxStyle.addLine(message);
 
@@ -99,7 +109,7 @@ public class NotificationUtils {
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentIntent(resultPendingIntent)
-                .setSound(alarmSound)
+                *//*.setSound(alarmSound)*//*
                 .setStyle(inboxStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -108,11 +118,54 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID, notification);
+        notificationManager.notify(Config.NOTIFICATION_ID, notification);*/
+
+        /*if(from.equals("1")) {
+            NotificationModel model = new NotificationModel();
+            model.title = title;
+            model.message = message;
+            model.receiveDateTime = timeStamp;
+            model.saveDateTime = DateTime.getCurrentDateTime();
+            model.readFlag = "0";
+            model.readDateTime = "";
+            Log.d("Notification", "title : " + model.title + "Message : " + model.message);
+            new NotificationTable(mContext).addNotificationData(model);
+        }*/
+
+        int NOTIFICATION_ID = /*Integer.parseInt(notificationId)*/234;
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        String CHANNEL_ID = "my_channel_01";
+        CharSequence name = "my_channel";
+        String Description = "This is my channel";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mChannel.setShowBadge(false);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message);
+        Intent resultIntent = new Intent(mContext, SplashActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
+        stackBuilder.addParentStack(SplashActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        //PendingIntent resultPendingIntent1 = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+
     }
 
-    private void showBigNotification(Bitmap bitmap, NotificationCompat.Builder mBuilder, int icon, String title, String message, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound) {
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+    private void showBigNotification(Bitmap bitmap, NotificationCompat.Builder mBuilder, int icon, String title, String message, String notificationId, String timeStamp, PendingIntent resultPendingIntent, Uri alarmSound, String from) {
+        /*NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle(title);
         bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
         bigPictureStyle.bigPicture(bitmap);
@@ -121,7 +174,7 @@ public class NotificationUtils {
                 .setAutoCancel(true)
                 .setContentTitle(title)
                 .setContentIntent(resultPendingIntent)
-                .setSound(alarmSound)
+                *//*.setSound(alarmSound)*//*
                 .setStyle(bigPictureStyle)
                 .setWhen(getTimeMilliSec(timeStamp))
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -130,7 +183,50 @@ public class NotificationUtils {
                 .build();
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notification);
+        notificationManager.notify(Config.NOTIFICATION_ID_BIG_IMAGE, notification);*/
+        /*if(from.equals("1")) {
+            NotificationModel model = new NotificationModel();
+            model.title = title;
+            model.message = message;
+            model.receiveDateTime = timeStamp;
+            model.saveDateTime = DateTime.getCurrentDateTime();
+            model.readFlag = "0";
+            model.readDateTime = "";
+            Log.d("Notification", "title : " + model.title + "Message : " + model.message);
+            new NotificationTable(mContext).addNotificationData(model);
+        }*/
+
+        int NOTIFICATION_ID = /*Integer.parseInt(notificationId)*/234;
+        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        String CHANNEL_ID = "my_channel_01";
+        CharSequence name = "my_channel";
+        String Description = "This is my channel";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mChannel.setShowBadge(false);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message);
+
+        Intent resultIntent = new Intent(mContext, Main2Activity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
+        stackBuilder.addParentStack(Main2Activity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        //PendingIntent resultPendingIntent1 = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+
     }
 
     /**
@@ -199,7 +295,7 @@ public class NotificationUtils {
     }
 
     public static long getTimeMilliSec(String timeStamp) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
         try {
             Date date = format.parse(timeStamp);
             return date.getTime();
