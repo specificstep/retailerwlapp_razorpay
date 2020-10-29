@@ -58,6 +58,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -80,7 +81,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import specificstep.com.Adapters.BannerAdapter;
 import specificstep.com.Adapters.NavigationDrawerAdapter;
 import specificstep.com.Adapters.ServicesAdapter;
-import specificstep.com.BuildConfig;
 import specificstep.com.Database.DatabaseHelper;
 import specificstep.com.Database.NotificationTable;
 import specificstep.com.GlobalClasses.AppController;
@@ -101,6 +101,7 @@ import specificstep.com.R;
 import specificstep.com.utility.Dlog;
 import specificstep.com.utility.InternetUtil;
 import specificstep.com.utility.MyPrefs;
+import specificstep.com.utility.UpdateData_ApiCall;
 import specificstep.com.utility.Utility;
 
 public class Main2Activity extends AppCompatActivity
@@ -147,7 +148,7 @@ public class Main2Activity extends AppCompatActivity
     private Constants constants;
     private DatabaseHelper databaseHelper;
     private LinearLayout /*llRecharge,*/ llRecentTransaction, llLogout,
-            llMain, llUpdate, ll_wallettopup_act_main,llChangePassword, llNotification, llCashBook,
+            llMain, llUpdate, ll_wallettopup_act_main, llChangePassword, llNotification, llCashBook,
             llAccountLedger, /*llDmt,*/
             llDmtTransactionList/*,
             llPaymentRequest, llParentUser, linParentUser, linLogOut*/;
@@ -218,12 +219,14 @@ public class Main2Activity extends AppCompatActivity
     TextView txtVersion;
     Thread thread;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    UpdateData_ApiCall updateData_apiCall;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences(Constants.SHAREEDPREFERENCE, Context.MODE_PRIVATE);
@@ -457,7 +460,7 @@ public class Main2Activity extends AppCompatActivity
                                             int min = (int) (minutes % 60);
                                             System.out.printf("%d:%02d", hr, min);
 
-                                            if(hr > 0) {
+                                            if (hr > 0) {
                                                 txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + hr + "hr:" + min + "min ago");
                                             } else {
                                                 txtVersion.setText("v" + BuildConfig.VERSION_NAME + "       Last Update:  " + minutes + "min ago");
@@ -516,8 +519,8 @@ public class Main2Activity extends AppCompatActivity
                 ll_wallettopup_act_main.setVisibility(View.VISIBLE);
                 llChangePassword.setVisibility(View.GONE);
             } else {*/
-                ll_wallettopup_act_main.setVisibility(View.VISIBLE);
-                llChangePassword.setVisibility(View.GONE);
+            ll_wallettopup_act_main.setVisibility(View.VISIBLE);
+            llChangePassword.setVisibility(View.GONE);
             stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             //}
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
@@ -589,10 +592,11 @@ public class Main2Activity extends AppCompatActivity
                         intent.putExtra("position", position);
                         startActivity(intent);
                     } else if (TextUtils.equals(selectedMenuName, MENU_UPDATE_DATA)) {
-                        position = 6;
-                        Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-                        intent.putExtra("position", position);
-                        startActivity(intent);
+                        updateData_apiCall = new UpdateData_ApiCall(context);
+//                        position = 6;
+//                        Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+//                        intent.putExtra("position", position);
+//                        startActivity(intent);
                     } else if (TextUtils.equals(selectedMenuName, MENU_DMT)) {
                         position = 9;
                         Intent intent = new Intent(getContextInstance(), HomeActivity.class);
@@ -748,10 +752,12 @@ public class Main2Activity extends AppCompatActivity
             intent.putExtra("position", position);
             startActivity(intent);
         } else if (id == R.id.nav_update_data) {
-            position = 6;
-            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-            intent.putExtra("position", position);
-            startActivity(intent);
+            updateData_apiCall = new UpdateData_ApiCall(context);
+
+//            position = 6;
+//            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+//            intent.putExtra("position", position);
+//            startActivity(intent);
         } else if (id == R.id.nav_ChangePassword) {
             position = 7;
             Intent intent = new Intent(getContextInstance(), HomeActivity.class);
@@ -1104,7 +1110,7 @@ public class Main2Activity extends AppCompatActivity
                         long hours = minutes / 60;
                         long days = hours / 24;
 
-                        if(hours<0) {
+                        if (hours < 0) {
                             hours = -hours;
                         }
 
@@ -1125,11 +1131,12 @@ public class Main2Activity extends AppCompatActivity
             }
         }
         if (checkDataUpdateRequire) {
-            position = 6;
-            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
-            intent.putExtra("position", position);
-            intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
-            startActivity(intent);
+            updateData_apiCall = new UpdateData_ApiCall(context);
+//            position = 6;
+//            Intent intent = new Intent(getContextInstance(), HomeActivity.class);
+//            intent.putExtra("position", position);
+//            intent.putExtra(constants.KEY_REQUIRE_UPDATE, "1");
+//            startActivity(intent);
         }
     }
 
@@ -1325,14 +1332,16 @@ public class Main2Activity extends AppCompatActivity
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);
         } else if (v == llUpdate) {
-            position = 6;
-            intent = new Intent(getContextInstance(), HomeActivity.class);
-            intent.putExtra("position", position);
+            updateData_apiCall = new UpdateData_ApiCall(context);
+
+//            position = 6;
+//            intent = new Intent(getContextInstance(), HomeActivity.class);
+//            intent.putExtra("position", position);
         } else if (v == ll_wallettopup_act_main) {
             position = 19;
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);
-        }else if (v == llChangePassword) {
+        } else if (v == llChangePassword) {
             position = 7;
             intent = new Intent(getContextInstance(), HomeActivity.class);
             intent.putExtra("position", position);
@@ -1377,7 +1386,7 @@ public class Main2Activity extends AppCompatActivity
         if (intent != null)
             startActivity(intent);
     }
-
+    @Override
     public void onBackPressed() {
         if (databaseHelper == null) {
             databaseHelper = new DatabaseHelper(Main2Activity.this);
@@ -1388,7 +1397,9 @@ public class Main2Activity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
                 moveTaskToBack(true);
+                finishAffinity();
                 return;
             }
             this.doubleBackToExitPressedOnce = true;
