@@ -295,7 +295,7 @@ public class NotificationFragment extends Fragment {
         try {
             // Check message contains mobile number or not
             if (originalMessage.contains("-")) {
-                formattedMessage = "Number : " + originalMessage.substring(0, originalMessage.indexOf("-")) + "\n";
+                formattedMessage = /*"Number : " + */originalMessage.substring(0, originalMessage.indexOf("-")) + "\n";
                 originalMessage = originalMessage.substring(originalMessage.indexOf("-") + 1, originalMessage.length());
                 // Check message contains comma separated value or not
                 if (originalMessage.contains(",")) {

@@ -438,10 +438,10 @@ public class Main2Activity extends AppCompatActivity
                                         if (TextUtils.equals(updateDate, "0")) {
                                             txtVersion.setText("v" + BuildConfig.VERSION_NAME);
                                         } else {
-                                            String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                                            String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm:ss", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
                                             String curTime = dateFormat.format(Calendar.getInstance().getTime());
-                                            SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+                                            SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss", Locale.US);
                                             Date dateUpdate = df.parse(updateTime1);
                                             Date dateCurrent = df.parse(curTime);
 
@@ -514,14 +514,20 @@ public class Main2Activity extends AppCompatActivity
             }
             stringArrayList.add(new NavigationModels(MENU_DMT_TRANSACTION_LIST, R.drawable.ic_transaction_report, 0));
             stringArrayList.add(new NavigationModels(MENU_PAYMENT_REQUEST, R.drawable.ic_payment_on_black_24dp, 0));
+
+
+            //Razopay feature
+            ll_wallettopup_act_main.setVisibility(View.GONE);
+            llChangePassword.setVisibility(View.VISIBLE);
+            //stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+
+
+
             /*if(databaseHelper.getPaymentGateway().size()>0) {
                 stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
                 ll_wallettopup_act_main.setVisibility(View.VISIBLE);
                 llChangePassword.setVisibility(View.GONE);
             } else {*/
-            ll_wallettopup_act_main.setVisibility(View.VISIBLE);
-            llChangePassword.setVisibility(View.GONE);
-            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             //}
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
@@ -1114,7 +1120,9 @@ public class Main2Activity extends AppCompatActivity
                             hours = -hours;
                         }
 
-                        if (!TextUtils.equals(updateDate, currentDate)) {
+                        if(hours < 0) {
+                            checkDataUpdateRequire = true;
+                        } else if (!TextUtils.equals(updateDate, currentDate)) {
                             checkDataUpdateRequire = true;
                         } else if (hours >= 4) {
                             checkDataUpdateRequire = true;

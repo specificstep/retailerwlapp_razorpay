@@ -941,10 +941,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                         if (TextUtils.equals(updateDate, "0")) {
                                             txtVersion.setText("v" + BuildConfig.VERSION_NAME);
                                         } else {
-                                            String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm a", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                                            String updateTime1 = Constants.parseDateToddMMyyyy("hh:mm:ss", "hh:mm:ss", prefs.retriveString(constants.PREF_UPDATE_TIME, "0"));
+                                            SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
                                             String curTime = dateFormat.format(Calendar.getInstance().getTime());
-                                            SimpleDateFormat df = new SimpleDateFormat("hh:mm a", Locale.US);
+                                            SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss", Locale.US);
                                             Date dateUpdate = df.parse(updateTime1);
                                             Date dateCurrent = df.parse(curTime);
 
@@ -1068,7 +1068,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             /*if(databaseHelper.getPaymentGateway().size()>0) {
                 stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
             }*/
-            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+
+            //Razopay Feature
+            //stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));
             stringArrayList.add(new NavigationModels(MENU_NOTIFICATION, R.drawable.ic_notifications_black_24dp, 0));

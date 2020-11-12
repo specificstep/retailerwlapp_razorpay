@@ -179,7 +179,7 @@ public class SplashActivity extends Activity {
                             "otp_code",
                             "app",
                             "is_read",
-                            "id"
+                            "notification_id"
                     };
                     String[] parametersValues = {
                             userArrayList.get(0).getUser_name(),

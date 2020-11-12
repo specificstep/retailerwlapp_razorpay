@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "1048309055732",
-    "firebase_url": "https://naaran-pay.firebaseio.com",
-    "project_id": "naaran-pay",
-    "storage_bucket": "naaran-pay.appspot.com"
+    "project_number": "700886739407",
+    "firebase_url": "https://chag-2a595.firebaseio.com",
+    "project_id": "chag-2a595",
+    "storage_bucket": "chag-2a595.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1048309055732:android:54cb9fa3fb23f2b598dea1",
+        "mobilesdk_app_id": "1:700886739407:android:1214a331c1b2e4ed",
         "android_client_info": {
-          "package_name": "specificstep.com.naaradpay"
+          "package_name": "specificstep.com.chag"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
+          "client_id": "700886739407-ltdg4a1dn805thccetm0auj1ht1pl328.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "specificstep.com.chag",
+            "certificate_hash": "a1698a39339ccf74a312602e8d6148d07c0dfcbb"
+          }
+        },
+        {
+          "client_id": "700886739407-4kibnkh1v9ugrf3pjkjrmih2e9rosole.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJq6M1jpVVdGckbUV9z_5jL4jvPQ4CBMY"
+          "current_key": "AIzaSyAimYZ8NPKe8ylK6pEnVxTl-uiwNpeRr5I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
+              "client_id": "700886739407-4kibnkh1v9ugrf3pjkjrmih2e9rosole.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

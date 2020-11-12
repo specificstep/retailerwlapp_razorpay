@@ -40,8 +40,8 @@ android {
         //applicationId 'specificstep.com'
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.5"
+        versionCode 8
+        versionName "1.7"
         multiDexEnabled true
 
         /*jackOptions {
@@ -57,10 +57,10 @@ android {
 
     productFlavors {
         MainApp {
-            applicationId = "specificstep.com.naaradpay"
+            applicationId = "specificstep.com.chag"
         }
         NewAppFlavor {
-            applicationId = "specificstep.com.naaradpay"
+            applicationId = "specificstep.com.chag"
         }
     }
 
