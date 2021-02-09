@@ -94,7 +94,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1.7"
                     android:src="@drawable/tap"
-                    android:tint="@color/colorPrimaryDark" />
+                    app:tint="@color/colorPrimaryDark" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,17 +106,156 @@
                     <EditText
                         android:id="@+id/edt_mo_no_fragment_recharge"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="57dp"
                         android:background="@android:color/transparent"
                         android:hint="Service No."
-                        android:inputType="number"
                         android:padding="10dp"
                         android:textColor="@color/colorBlack"
                         android:textColorHint="@color/colorBlack"
-                        android:textSize="38sp" />
+                        android:textSize="36sp" />
 
                     <!--<ImageView
                         android:id="@+id/img_Recharge_AllContacts"
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/ic_contact_list"
+                        android:tint="@color/colorPrimaryDark" />-->
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/second_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.7"
+                    android:src="@drawable/ic_electricity"
+                    app:tint="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/square_round_corner"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_mo_no_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
+                        android:textSize="30sp" />
+
+                    <!--<ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/ic_contact_list"
+                        android:tint="@color/colorPrimaryDark" />-->
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/third_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.7"
+                    android:src="@drawable/ic_electricity"
+                    app:tint="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/square_round_corner"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_mo_no_third"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
+                        android:textSize="30sp" />
+
+                    <!--<ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_weight="0.2"
+                        android:src="@drawable/ic_contact_list"
+                        android:tint="@color/colorPrimaryDark" />-->
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/fourth_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.7"
+                    android:src="@drawable/ic_electricity"
+                    app:tint="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/square_round_corner"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_mo_no_fourth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="10dp"
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack"
+                        android:textSize="30sp" />
+
+                    <!--<ImageView
                         android:layout_width="0dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
@@ -186,7 +325,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.3"
                     android:src="@drawable/ic_person_white"
-                    android:tint="@color/colorPrimaryDark" />
+                    app:tint="@color/colorPrimaryDark" />
 
                 <EditText
                     android:id="@+id/edt_Recharge_Name"
@@ -219,7 +358,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="0.3"
                     android:src="@drawable/ic_circle"
-                    android:tint="@color/colorPrimaryDark" />
+                    app:tint="@color/colorPrimaryDark" />
 
                 <Spinner
                     android:id="@+id/sp_circle_fragment_recharge"
@@ -244,7 +383,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="0.3"
                     android:src="@drawable/ic_rs"
-                    android:tint="@color/colorPrimaryDark" />
+                    app:tint="@color/colorPrimaryDark" />
 
                 <EditText
                     android:id="@+id/edt_amt_fragment_recharge"

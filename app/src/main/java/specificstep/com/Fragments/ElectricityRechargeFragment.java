@@ -835,49 +835,37 @@ public class ElectricityRechargeFragment extends Fragment implements View.OnClic
 
     public boolean valid() {
         if (edtMobileNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edtMobileNumber.getText())) {
-            Toast.makeText(getActivity(), "Please Enter " + first_tag, Toast.LENGTH_LONG).show();
+            if(first_tag != null && !first_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + first_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edtMobileNumber.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
             return false;
         } else if (second_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_second.getText())) {
-            Toast.makeText(getActivity(), "Please Enter " + second_tag, Toast.LENGTH_LONG).show();
+            if(second_tag != null && !second_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + second_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_second.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
             return false;
         } else if (third_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_third.getText())) {
-            Toast.makeText(getActivity(), "Please Enter " + third_tag, Toast.LENGTH_LONG).show();
+            if(third_tag != null && !third_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + third_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_third.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
             return false;
         } else if (fourth_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_fourth.getText())) {
-            Toast.makeText(getActivity(), "Please Enter " + fourth_tag, Toast.LENGTH_LONG).show();
+            if(fourth_tag != null && !fourth_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + fourth_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_fourth.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
             return false;
         } else if (llAmount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edtAmount.getText().toString())) {
             Toast.makeText(getActivity(), "Please Enter Amount.", Toast.LENGTH_LONG).show();
             return false;
         }
-
-
-//            if (edtMobileNumber.getVisibility() == View.VISIBLE) {
-//                if (TextUtils.isEmpty(edtMobileNumber.getText())) {
-//                    Toast.makeText(getActivity(), "Please Enter " + first_tag, Toast.LENGTH_LONG).show();
-//                    return false;
-//                }
-//            } else if (second_layout.getVisibility() == View.VISIBLE) {
-//                if (TextUtils.isEmpty(edt_mo_no_second.getText())) {
-//                    Toast.makeText(getActivity(), "Please Enter " + second_tag, Toast.LENGTH_LONG).show();
-//                    return false;
-//                }
-//            } else if (edt_mo_no_third.getVisibility() == View.VISIBLE) {
-//                if (TextUtils.isEmpty(edt_mo_no_third.getText())) {
-//                    Toast.makeText(getActivity(), "Please Enter " + third_tag, Toast.LENGTH_LONG).show();
-//                    return false;
-//                }
-//            } else if (edt_mo_no_fourth.getVisibility() == View.VISIBLE) {
-//                if (TextUtils.isEmpty(edt_mo_no_fourth.getText())) {
-//                    Toast.makeText(getActivity(), "Please Enter " + fourth_tag, Toast.LENGTH_LONG).show();
-//                    return false;
-//                }
-//            } else if (TextUtils.isEmpty(edtAmount.getText().toString())) {
-//                Toast.makeText(getActivity(), "Please Enter Amount.", Toast.LENGTH_LONG).show();
-//                return false;
-//            } else {
-//                return true;
-//            }
         return true;
     }
 

@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "specificstep.com.swamiagencies",
+  "applicationId": "specificstep.com.naaradpay",
   "variantName": "MainAppRelease",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 8,
-      "versionName": "1.7",
+      "versionCode": 44,
+      "versionName": "4.4",
       "enabled": true,
       "outputFile": "app-MainApp-release.apk"
     }

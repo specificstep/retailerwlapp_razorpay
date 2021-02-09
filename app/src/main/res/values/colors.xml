@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--Swami Agencies colors:-->
-    <color name="colorPrimary">#547ce1</color>
-    <color name="colorPrimaryDark">#547ce1</color>
-    <color name="colorLayoutBackground">#547ce1</color>
-    <color name="colorServiceText">#1D2B4E</color>
+    <!--Naarad Pay colors:-->
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#FF9800</color>
+    <color name="colorLayoutBackground">#FF9800</color>
+    <color name="colorServiceText">#FF9800</color>
     <!-- ============================================================= -->
     <color name="colorGrey">#ededed</color>
 

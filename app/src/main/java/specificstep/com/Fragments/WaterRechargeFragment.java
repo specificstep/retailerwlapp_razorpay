@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,6 +40,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -55,6 +58,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -73,6 +77,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import specificstep.com.Activities.BrowsePlansActivity;
@@ -128,8 +133,13 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private String strMobileNumber, strAmount, strCompanyName, strProductName, strCircle,
             strProductId, strCompanyId, strUserName, strMacAddress,
-            strOtpCode, strCircleId, strCompanyLogo, is_partial, strCustomerName = "";
+            strOtpCode, strCircleId, strCompanyLogo, is_partial, strCustomerName = "",
+            first_tag, second_tag, third_tag, fourth_tag, first_length, second_length, third_length, fourth_length,
+            first_type, second_type, third_type, fourth_type;
+    int selectDate = 0, selectMonth = 0, selectYear = 0;
     private String isCreditStatus = "0", name = "";
+    LinearLayout second_layout, third_layout, fourth_layout;
+    EditText edt_mo_no_second, edt_mo_no_third, edt_mo_no_fourth;
 
     /* All ArrayList */
     private ArrayList<State> stateArrayList;
@@ -308,6 +318,15 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void initControls() {
+
+        second_layout = (LinearLayout) view.findViewById(R.id.second_layout);
+        third_layout = (LinearLayout) view.findViewById(R.id.third_layout);
+        fourth_layout = (LinearLayout) view.findViewById(R.id.fourth_layout);
+
+        edt_mo_no_second = (EditText) view.findViewById(R.id.edt_mo_no_second);
+        edt_mo_no_third = (EditText) view.findViewById(R.id.edt_mo_no_third);
+        edt_mo_no_fourth = (EditText) view.findViewById(R.id.edt_mo_no_fourth);
+
         /* [START] - bind view */
         llCircleContainer = (LinearLayout) view.findViewById(R.id.circle_container);
         llNameView = (LinearLayout) view.findViewById(R.id.ll_Recharge_NameView);
@@ -400,6 +419,16 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
                 btnProcess.setVisibility(View.VISIBLE);
                 llAmount.setVisibility(View.VISIBLE);
             }
+
+            //first_tag
+            setFirstTag();
+            //second_tag
+            setSecondTag();
+            //third_tag
+            setThirdTag();
+            //fourth_tag
+            setForthTag();
+
         }
         // [END]
 
@@ -447,6 +476,385 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
             }
         }
         // [END]
+    }
+
+    private void setFirstTag() {
+        if (first_tag != null && !first_tag.isEmpty() && !first_tag.equals("null")) {
+            edtMobileNumber.setHint(first_tag);
+            //set length
+//for type
+//            first_type (1=Only numbers, 2 = Only Charachter, 3 = All, 4 = Email, 5 = Date, 6 = Predefined)
+
+            if (first_type != null && !first_type.isEmpty() && !first_type.equals("null")) {
+                if (first_type.equals("1")) {
+                    edtMobileNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else if (first_type.equals("2")) {
+                    edtMobileNumber.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                } else if (first_type.equals("3")) {
+                    edtMobileNumber.setInputType(InputType.TYPE_CLASS_TEXT);
+
+
+                } else if (first_type.equals("4")) {
+
+                    edtMobileNumber.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+                } else if (first_type.equals("5")) {
+
+                    edtMobileNumber.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar mcurrentDate = Calendar.getInstance();
+                            final int year = mcurrentDate.get(Calendar.YEAR);
+                            final int month = mcurrentDate.get(Calendar.MONTH);
+                            final int day = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                            final DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                                    String tempDate = selectedyear + "|" + (selectedmonth + 1) + "|" + selectedday;
+                                    edtMobileNumber.setText(Constants.commonDateFormate(tempDate, "yyyy-MM-dd", "dd-MMM-yyyy"));
+                                    selectDate = selectedday;
+                                    selectMonth = selectedmonth + 1;
+                                    selectYear = selectedyear;
+                                }
+                            }, year, month, day);
+                            mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+                            if (!TextUtils.isEmpty(edtMobileNumber.getText().toString())) {
+                                mDatePicker.updateDate(selectYear, selectMonth - 1, selectDate);
+                            }
+                            mDatePicker.show();
+                        }
+                    });
+                } else if (first_type.equals("6")) {
+
+                }
+            }
+            edtMobileNumber.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (edtMobileNumber.getText().length() > 0) {
+                        if (first_length != null && !first_length.isEmpty() && !first_length.equals("null")) {
+                            if (first_length.contains("-")) {
+                                int num = edtMobileNumber.getText().length();
+
+                                String[] separated = first_length.split("-");
+                                int min = Integer.parseInt(separated[0]);
+                                int max = Integer.parseInt(separated[1]);
+                                if (num >= min && num <= max) {
+                                    edtMobileNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
+
+                                    //save the number
+
+                                }
+                            } else {
+                                int second_length_int = Integer.parseInt(first_length);
+                                edtMobileNumber.setFilters(new InputFilter[]{new InputFilter.LengthFilter(second_length_int)});
+
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            //end
+
+        } else {
+            edtMobileNumber.setHint("Service No.");
+
+        }
+    }
+
+    private void setSecondTag() {
+        if (second_tag != null && !second_tag.isEmpty() && !second_tag.equals("null")) {
+            second_layout.setVisibility(View.VISIBLE);
+
+            edt_mo_no_second.setHint(second_tag);
+
+            //for type
+//            first_type (1=Only numbers, 2 = Only Charachter, 3 = All, 4 = Email, 5 = Date, 6 = Predefined)
+
+            if (second_type != null && !second_type.isEmpty() && !second_type.equals("null")) {
+                if (second_type.equals("1")) {
+                    edt_mo_no_second.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else if (second_type.equals("2")) {
+                    edt_mo_no_second.setInputType(InputType.TYPE_CLASS_TEXT);
+                } else if (second_type.equals("3")) {
+                    edt_mo_no_second.setInputType(InputType.TYPE_CLASS_TEXT);
+                } else if (second_type.equals("4")) {
+                    edt_mo_no_second.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                } else if (second_type.equals("5")) {
+                    edt_mo_no_second.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar mcurrentDate = Calendar.getInstance();
+                            final int year = mcurrentDate.get(Calendar.YEAR);
+                            final int month = mcurrentDate.get(Calendar.MONTH);
+                            final int day = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                            final DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                                    String tempDate = selectedyear + "|" + (selectedmonth + 1) + "|" + selectedday;
+                                    edt_mo_no_second.setText(Constants.commonDateFormate(tempDate, "yyyy-MM-dd", "dd-MMM-yyyy"));
+                                    selectDate = selectedday;
+                                    selectMonth = selectedmonth + 1;
+                                    selectYear = selectedyear;
+                                }
+                            }, year, month, day);
+                            mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+                            if (!TextUtils.isEmpty(edt_mo_no_second.getText().toString())) {
+                                mDatePicker.updateDate(selectYear, selectMonth - 1, selectDate);
+                            }
+                            mDatePicker.show();
+                        }
+                    });
+                } else if (second_type.equals("6")) {
+                }
+            }
+            edt_mo_no_second.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (edt_mo_no_second.getText().length() > 0) {
+                        int num = edt_mo_no_second.getText().length();
+                        if (second_length != null && !second_length.isEmpty() && !second_length.equals("null")) {
+                            if (second_length.contains("-")) {
+                                String[] separated = second_length.split("-");
+                                int min = Integer.parseInt(separated[0]);
+                                int max = Integer.parseInt(separated[1]);
+                                if (num >= min && num <= max) {
+                                    //save the number
+                                    edt_mo_no_second.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
+
+                                }
+                            } else {
+                                int second_length_int = Integer.parseInt(second_length);
+                                edt_mo_no_second.setFilters(new InputFilter[]{new InputFilter.LengthFilter(second_length_int)});
+
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+        } else {
+            second_layout.setVisibility(View.GONE);
+            edt_mo_no_second.setVisibility(View.GONE);
+        }
+    }
+
+    private void setThirdTag() {
+        if (third_tag != null && !third_tag.isEmpty() && !third_tag.equals("null")) {
+            third_layout.setVisibility(View.VISIBLE);
+            edt_mo_no_third.setHint(third_tag);
+
+
+            //for type
+//            first_type (1=Only numbers, 2 = Only Charachter, 3 = All, 4 = Email, 5 = Date, 6 = Predefined)
+
+            if (third_type != null && !third_type.isEmpty() && !third_type.equals("null")) {
+                if (third_type.equals("1")) {
+                    edt_mo_no_third.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else if (third_type.equals("2")) {
+                    edt_mo_no_third.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                } else if (third_type.equals("3")) {
+                    edt_mo_no_third.setInputType(InputType.TYPE_CLASS_TEXT);
+
+
+                } else if (third_type.equals("4")) {
+
+                    edt_mo_no_third.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+                } else if (third_type.equals("5")) {
+
+                    edt_mo_no_third.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar mcurrentDate = Calendar.getInstance();
+                            final int year = mcurrentDate.get(Calendar.YEAR);
+                            final int month = mcurrentDate.get(Calendar.MONTH);
+                            final int day = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                            final DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                                    String tempDate = selectedyear + "|" + (selectedmonth + 1) + "|" + selectedday;
+                                    edt_mo_no_third.setText(Constants.commonDateFormate(tempDate, "yyyy-MM-dd", "dd-MMM-yyyy"));
+                                    selectDate = selectedday;
+                                    selectMonth = selectedmonth + 1;
+                                    selectYear = selectedyear;
+                                }
+                            }, year, month, day);
+                            mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+                            if (!TextUtils.isEmpty(edt_mo_no_third.getText().toString())) {
+                                mDatePicker.updateDate(selectYear, selectMonth - 1, selectDate);
+                            }
+                            mDatePicker.show();
+                        }
+                    });
+                } else if (third_type.equals("6")) {
+
+                }
+            }
+            //set length
+            edt_mo_no_third.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (edt_mo_no_third.getText().length() > 0) {
+                        int num = edt_mo_no_third.getText().length();
+                        if (third_length != null && !third_length.isEmpty() && !third_length.equals("null")) {
+                            if (third_length.contains("-")) {
+                                String[] separated = third_length.split("-");
+                                int min = Integer.parseInt(separated[0]);
+                                int max = Integer.parseInt(separated[1]);
+                                if (num >= min && num <= max) {
+                                    //save the number
+                                    edt_mo_no_third.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
+
+                                }
+                            } else {
+                                int length_int = Integer.parseInt(third_length);
+                                edt_mo_no_third.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length_int)});
+
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            //end
+        } else {
+            third_layout.setVisibility(View.GONE);
+
+        }
+    }
+
+    private void setForthTag() {
+
+        if (fourth_tag != null && !fourth_tag.isEmpty() && !fourth_tag.equals("null")) {
+            fourth_layout.setVisibility(View.VISIBLE);
+            edt_mo_no_fourth.setHint(fourth_tag);
+
+            //for type
+//            first_type (1=Only numbers, 2 = Only Charachter, 3 = All, 4 = Email, 5 = Date, 6 = Predefined)
+
+            if (fourth_type != null && !fourth_type.isEmpty() && !fourth_type.equals("null")) {
+                if (fourth_type.equals("1")) {
+                    edt_mo_no_fourth.setInputType(InputType.TYPE_CLASS_NUMBER);
+                } else if (fourth_type.equals("2")) {
+                    edt_mo_no_fourth.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                } else if (fourth_type.equals("3")) {
+                    edt_mo_no_fourth.setInputType(InputType.TYPE_CLASS_TEXT);
+
+
+                } else if (fourth_type.equals("4")) {
+
+                    edt_mo_no_fourth.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+                } else if (fourth_type.equals("5")) {
+
+                    edt_mo_no_fourth.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Calendar mcurrentDate = Calendar.getInstance();
+                            final int year = mcurrentDate.get(Calendar.YEAR);
+                            final int month = mcurrentDate.get(Calendar.MONTH);
+                            final int day = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                            final DatePickerDialog mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                                    String tempDate = selectedyear + "|" + (selectedmonth + 1) + "|" + selectedday;
+                                    edt_mo_no_fourth.setText(Constants.commonDateFormate(tempDate, "yyyy-MM-dd", "dd-MMM-yyyy"));
+                                    selectDate = selectedday;
+                                    selectMonth = selectedmonth + 1;
+                                    selectYear = selectedyear;
+                                }
+                            }, year, month, day);
+                            mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+                            if (!TextUtils.isEmpty(edt_mo_no_fourth.getText().toString())) {
+                                mDatePicker.updateDate(selectYear, selectMonth - 1, selectDate);
+                            }
+                            mDatePicker.show();
+                        }
+                    });
+                } else if (fourth_type.equals("6")) {
+
+                }
+            }
+            //set length
+            edt_mo_no_fourth.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (edt_mo_no_fourth.getText().length() > 0) {
+                        int num = edt_mo_no_fourth.getText().length();
+                        if (fourth_length != null && !fourth_length.isEmpty() && !fourth_length.equals("null")) {
+                            if (fourth_length.contains("-")) {
+                                String[] separated = fourth_length.split("-");
+                                int min = Integer.parseInt(separated[0]);
+                                int max = Integer.parseInt(separated[1]);
+                                if (num >= min && num <= max) {
+                                    //save the number
+                                    edt_mo_no_fourth.setFilters(new InputFilter[]{new InputFilter.LengthFilter(max)});
+
+                                }
+                            } else {
+                                int length_int = Integer.parseInt(fourth_length);
+                                edt_mo_no_fourth.setFilters(new InputFilter[]{new InputFilter.LengthFilter(length_int)});
+
+                            }
+
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            //end
+        } else {
+            fourth_layout.setVisibility(View.GONE);
+
+        }
     }
 
     //multi wallet 14-3-2019
@@ -552,12 +960,34 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
         // [START] - Get bundle data
         Bundle bundle = WaterRechargeFragment.this.getArguments();
         if (bundle != null) {
+            /*strCompanyId = bundle.getString("company_id");
+            strProductId = bundle.getString("product_id");
+            strCompanyName = bundle.getString("company_name");
+            strProductName = bundle.getString("product_name");
+            strCompanyLogo = bundle.getString("company_image");
+            is_partial = bundle.getString("is_partial");
+            String productLogo = bundle.getString("product_image");*/
             strCompanyId = bundle.getString("company_id");
             strProductId = bundle.getString("product_id");
             strCompanyName = bundle.getString("company_name");
             strProductName = bundle.getString("product_name");
             strCompanyLogo = bundle.getString("company_image");
             is_partial = bundle.getString("is_partial");
+            first_tag = bundle.getString("first_tag");
+            second_tag = bundle.getString("second_tag");
+            third_tag = bundle.getString("third_tag");
+            fourth_tag = bundle.getString("fourth_tag");
+
+            first_length = bundle.getString("first_length");
+            second_length = bundle.getString("second_length");
+            third_length = bundle.getString("third_length");
+            fourth_length = bundle.getString("fourth_length");
+
+            first_type = bundle.getString("first_type");
+            second_type = bundle.getString("second_type");
+            third_type = bundle.getString("third_type");
+            fourth_type = bundle.getString("fourth_type");
+
             String productLogo = bundle.getString("product_image");
         }
         // [END]
@@ -725,10 +1155,8 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
             sharedPreferences.edit().putString(constants.AMOUNT, strAmount).commit();
             switch (v.getId()) {
                 case R.id.btn_proceed_fragment_recharge:
-                    if (!TextUtils.isEmpty(edtAmount.getText().toString())) {
+                    if (valid()) {
                         showConfirmationDialog();
-                    } else {
-                        Utility.amountToast(getContextInstance(), "Please enter amount");
                     }
                     break;
                 case R.id.btn_cancel_confirm_dialog:
@@ -788,17 +1216,51 @@ public class WaterRechargeFragment extends Fragment implements View.OnClickListe
                     // [END]
                     break;*/
                 case R.id.btn_view_bill_fragment_recharge:
-                    if (!TextUtils.isEmpty(edtMobileNumber.getText().toString())) {
+                    if (valid()) {
                         showProgressDialog();
                         makeNativeViewBill();
-                    } else {
-                        Toast.makeText(getActivity(), "Please enter service no.", Toast.LENGTH_LONG).show();
                     }
                     break;
             }
         } catch (Exception e) {
             Dlog.d(e.toString());
         }
+    }
+
+    public boolean valid() {
+        if (edtMobileNumber.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edtMobileNumber.getText())) {
+            if(first_tag != null && !first_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + first_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edtMobileNumber.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
+            return false;
+        } else if (second_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_second.getText())) {
+            if(second_tag != null && !second_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + second_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_second.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
+            return false;
+        } else if (third_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_third.getText())) {
+            if(third_tag != null && !third_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + third_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_third.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
+            return false;
+        } else if (fourth_layout.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edt_mo_no_fourth.getText())) {
+            if(fourth_tag != null && !fourth_tag.equals("null")) {
+                Toast.makeText(getActivity(), "Please Enter " + fourth_tag, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Please Enter " + edt_mo_no_fourth.getHint().toString(), Toast.LENGTH_LONG).show();
+            }
+            return false;
+        } else if (llAmount.getVisibility() == View.VISIBLE && TextUtils.isEmpty(edtAmount.getText().toString())) {
+            Toast.makeText(getActivity(), "Please Enter Amount.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 
     private void makeNativeViewBill() {
