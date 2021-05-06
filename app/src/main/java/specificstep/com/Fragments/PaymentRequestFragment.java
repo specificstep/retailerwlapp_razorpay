@@ -82,7 +82,7 @@ public class PaymentRequestFragment extends Fragment {
     Button add_submit, add_reset, btnBankDetail;
     CardView crdBankDetail;
     LinearLayout lnrAddAmountWords, lnrAddBank, lnrAddChequeNo, lnrAddBranch,
-            lnrAddTransactionId, lnrAddRemarks, lnrAddBankDetail;
+            lnrAddTransactionId, lnrAddRemarks, lnrAddBankDetail, lnrDepositBank;
     TextView txtAddNumberWords, txtDetailPayeeName, txtDetailBankName;
     ScrollView scrollView;
     TransparentProgressDialog transparentProgressDialog;
@@ -373,6 +373,7 @@ public class PaymentRequestFragment extends Fragment {
         lnrAddTransactionId = (LinearLayout) view.findViewById(R.id.lnrPaymentRequestAddTransactionId);
         lnrAddRemarks = (LinearLayout) view.findViewById(R.id.lnrPaymentRequestAddRemarks);
         lnrAddBankDetail = (LinearLayout) view.findViewById(R.id.lnrAddBankDetail);
+        lnrDepositBank = (LinearLayout) view.findViewById(R.id.lnrPaymentRequestDepositBank);
         btnBankDetail = (Button) view.findViewById(R.id.btnPaymentRequestBankDetail);
         crdBankDetail = (CardView) view.findViewById(R.id.crdDepositBankDetail);
         scrollView = (ScrollView) view.findViewById(R.id.scrollViewPaymentRequest);
@@ -450,8 +451,9 @@ public class PaymentRequestFragment extends Fragment {
 
                 JSONObject object = new JSONObject(decrypted_response);
                 JSONArray array = object.getJSONArray("data");
+                depositBankModelList = new ArrayList<PaymentRequestDepositBankModel>();
                 if(array.length()>0) {
-                    depositBankModelList = new ArrayList<PaymentRequestDepositBankModel>();
+                    lnrDepositBank.setVisibility(View.VISIBLE);
                     depositBankList = new ArrayList<String>();
                     for(int i=0;i<array.length();i++) {
                         JSONObject object1 = array.getJSONObject(i);
@@ -478,6 +480,7 @@ public class PaymentRequestFragment extends Fragment {
                             }
                             lnrAddBankDetail.setVisibility(View.VISIBLE);
                             crdBankDetail.setVisibility(View.VISIBLE);
+                            lnrDepositBank.setVisibility(View.VISIBLE);
 
                             txtDetailPayeeName.setText(depositBankModelList.get(0).getPayee_name());
                             if (depositBankModelList.get(0).getAccount_type().equals("null")) {
@@ -495,11 +498,14 @@ public class PaymentRequestFragment extends Fragment {
                         } else {
                             lnrAddBankDetail.setVisibility(View.GONE);
                             crdBankDetail.setVisibility(View.GONE);
+                            lnrDepositBank.setVisibility(View.GONE);
                         }
                     } catch (Exception e) {
                         System.out.println(e.toString());
                     }
 
+                } else {
+                    lnrDepositBank.setVisibility(View.GONE);
                 }
 
         } else {
@@ -713,7 +719,7 @@ public void makeWalletCall() {
             public void run() {
                 try {
                     String to_bank_id = "", cheque_no = "", branch = "",
-                            transaction_id = "", remarks = "";
+                            transaction_id = "", remarks = "", deposit_bank = "";
                     if(lnrAddBank.getVisibility() == View.VISIBLE) {
                         to_bank_id = bankModelList.get(add_bank.getSelectedItemPosition()).getId().toString();
                     } else {
@@ -738,6 +744,11 @@ public void makeWalletCall() {
                         remarks = add_remarks.getText().toString();
                     } else {
                         remarks = "";
+                    }
+                    if(depositBankModelList.size()>0) {
+                        deposit_bank = depositBankModelList.get(add_deposit_bank.getSelectedItemPosition()).getId().toString();
+                    } else {
+                        deposit_bank = "";
                     }
                     // set cashBook url
                     String url = URL.addpaymentrequest;
@@ -766,7 +777,7 @@ public void makeWalletCall() {
                             Constants.APP_VERSION,
                             user_id,
                             add_request_amount.getText().toString(),
-                            depositBankModelList.get(add_deposit_bank.getSelectedItemPosition()).getId().toString(),
+                            deposit_bank,
                             Constants.commonDateFormate(add_payment_date.getText().toString(),"dd-MMM-yyyy","yyyy-MM-dd"),
                             branch,
                             String.valueOf(add_payment_method.getSelectedItemPosition()),
@@ -944,6 +955,7 @@ public void makeWalletCall() {
         TextView txtNote = (TextView) dialog.findViewById(R.id.txtPopupPaymentNote);
         TextView txtMsg = (TextView) dialog.findViewById(R.id.txtPopupPaymentMsg);
         LinearLayout lnrNote = (LinearLayout) dialog.findViewById(R.id.lnrPopupPaymentNote);
+        LinearLayout lnrBank = (LinearLayout) dialog.findViewById(R.id.lnrPopupPaymentBank);
 
         txtWallet.setText(add_wallet_type.getSelectedItem().toString());
         if(add_payment_method.getSelectedItemPosition() == 0) {
@@ -966,7 +978,12 @@ public void makeWalletCall() {
                     add_payment_method.getSelectedItem().toString() + "\nTransaction Id: " +
                     add_transaction_id.getText().toString());
         }
-        txtBank.setText(add_deposit_bank.getSelectedItem().toString());
+        if(depositBankModelList.size()>0) {
+            txtBank.setText(add_deposit_bank.getSelectedItem().toString());
+            lnrBank.setVisibility(View.VISIBLE);
+        } else {
+            lnrBank.setVisibility(View.GONE);
+        }
         txtMsg.setText("AMOUNT : " + add_request_amount.getText().toString());
         if(TextUtils.isEmpty(add_remarks.getText().toString())) {
             lnrNote.setVisibility(View.GONE);

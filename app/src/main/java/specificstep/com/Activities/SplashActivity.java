@@ -84,9 +84,10 @@ public class SplashActivity extends Activity {
 
             try {
                 //set background as per package name
-                Constants.chaneBackground(SplashActivity.this, (LinearLayout) findViewById(R.id.lnrSplash));
+                Constants.chaneBackground2(SplashActivity.this, (LinearLayout) findViewById(R.id.lnrSplash));
                 //set icon as per package name
-                Constants.chaneIcon(SplashActivity.this, (ImageView) findViewById(R.id.imageView));
+                Constants.chaneIcon(SplashActivity.this,
+                        (ImageView) findViewById(R.id.imageView));
 
             } catch (Exception e) {
                 Dlog.d("Splash crash");

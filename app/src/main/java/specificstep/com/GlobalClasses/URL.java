@@ -6,7 +6,7 @@ package specificstep.com.GlobalClasses;
 
 public class URL {
 
-    public static String base_url = "http://www.naaradpay.in/webservices/";
+    public static String base_url = "http://swamiagencies.com/webservices/"; //swami agencies url
 
     public static String register = base_url + "register";
     public static String company = base_url + "company";

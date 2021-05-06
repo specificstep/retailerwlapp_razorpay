@@ -517,9 +517,9 @@ public class Main2Activity extends AppCompatActivity
 
 
             //Razopay feature
-            ll_wallettopup_act_main.setVisibility(View.VISIBLE);
-            llChangePassword.setVisibility(View.GONE);
-            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+            ll_wallettopup_act_main.setVisibility(View.GONE);
+            llChangePassword.setVisibility(View.VISIBLE);
+            //stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
 
 
 

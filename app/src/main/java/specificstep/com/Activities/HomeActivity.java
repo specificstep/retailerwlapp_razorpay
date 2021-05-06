@@ -1065,12 +1065,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
             stringArrayList.add(new NavigationModels(MENU_DMT_TRANSACTION_LIST, R.drawable.ic_transaction_report, 0));
             stringArrayList.add(new NavigationModels(MENU_PAYMENT_REQUEST, R.drawable.ic_payment_on_black_24dp, 0));
-            if(databaseHelper.getPaymentGateway().size()>0) {
+            /*if(databaseHelper.getPaymentGateway().size()>0) {
                 stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
-            }
+            }*/
 
-            //Razopay Feature
-            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));
+            /*//Razopay Feature
+            stringArrayList.add(new NavigationModels(MENU_ONLINE_PAYMENT, R.drawable.ic_payment_on_black_24dp, 0));*/
 
             stringArrayList.add(new NavigationModels(MENU_PARENT_USER, R.drawable.ic_parent_user, 0));
             stringArrayList.add(new NavigationModels(MENU_CHANGE_PASSWORD, R.drawable.ic_menu_change_password, 0));

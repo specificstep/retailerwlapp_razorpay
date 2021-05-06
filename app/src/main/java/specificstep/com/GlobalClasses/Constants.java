@@ -196,7 +196,11 @@ public class Constants {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static void chaneBackground(Activity activity, LinearLayout lnr) {
         Constants.APP_PACKAGE_NAME = activity.getPackageName();
-        lnr.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimaryDark));
+        lnr.setBackgroundColor(activity.getResources().getColor(R.color.colorPrimary));
+        lnr.getBackground().setAlpha(200);
+    }  public static void chaneBackground2(Activity activity, LinearLayout lnr) {
+        Constants.APP_PACKAGE_NAME = activity.getPackageName();
+        lnr.setBackgroundColor(activity.getResources().getColor(R.color.colorWhite));
         lnr.getBackground().setAlpha(200);
     }
 
@@ -303,15 +307,16 @@ public class Constants {
             System.out.println("Network available.");
             if (getInetAddressByName("www.google.com")) {
                 System.out.println("google find successful.");
+                connected = true;
                 //if(getInetAddressByName("portal.specificstep.com")) {
-                if (getInetAddressByName("www.maatarinimobile.co.in")) {
+                /*if (getInetAddressByName(URL.url)) {
                     connected = true;
                     System.out.println("URL find successful.");
                 } else {
                     connected = false;
                     System.out.println("Please check your mobile data or wifi connection.");
                     showErrorInternetDialog(activity, "Please check your mobile data or wifi connection and try again later.");
-                }
+                }*/
             } else {
                 connected = false;
                 System.out.println("Please check your mobile data connection.");

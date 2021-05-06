@@ -1,37 +1,52 @@
 {
   "project_info": {
-    "project_number": "1048309055732",
-    "firebase_url": "https://naaran-pay.firebaseio.com",
-    "project_id": "naaran-pay",
-    "storage_bucket": "naaran-pay.appspot.com"
+    "project_number": "200145466262",
+    "firebase_url": "https://swami-agencies-retailer.firebaseio.com",
+    "project_id": "swami-agencies-retailer",
+    "storage_bucket": "swami-agencies-retailer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1048309055732:android:54cb9fa3fb23f2b598dea1",
+        "mobilesdk_app_id": "1:200145466262:android:755785a7eda24f9d",
         "android_client_info": {
-          "package_name": "specificstep.com.naaradpay"
+          "package_name": "specificstep.com.swamiagencies"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
+          "client_id": "200145466262-evsv995grvmmqbg6c10u47k9e9jjfg87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "specificstep.com.swamiagencies",
+            "certificate_hash": "a1698a39339ccf74a312602e8d6148d07c0dfcbb"
+          }
+        },
+        {
+          "client_id": "200145466262-3fc5n7teta937jv6t3lkvrang2qktqae.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJq6M1jpVVdGckbUV9z_5jL4jvPQ4CBMY"
+          "current_key": "AIzaSyC8ZWcf6NcmbFovTjLjAfeYoHltBlb7nRg"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 1
+        },
         "appinvite_service": {
+          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1048309055732-7dqq3akvatomdjn2423i84ocdn7vbk6c.apps.googleusercontent.com",
+              "client_id": "200145466262-3fc5n7teta937jv6t3lkvrang2qktqae.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
         }
       }
     }
